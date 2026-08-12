@@ -1,80 +1,14 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IX A CLASS - Anak Bu Roida</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    <!-- Pustaka FontAwesome untuk Grafik / Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-    
-    /* --- LOADING SCREEN 3 DETIK --- */
-        #page-loader {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 22px;
-            background: #f8fafc;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        #page-loader.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-spinner {
-            width: 58px;
-            height: 58px;
-            border: 5px solid #dbeafe;
-            border-top-color: var(--primary-blue);
-            border-radius: 50%;
-            animation: loaderSpin 0.8s linear infinite;
-        }
-
-        @keyframes loaderSpin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loader-title {
-            color: var(--dark-blue);
-            font-size: 1.25rem;
-            font-weight: 800;
-        }
-
-        .loader-quote {
-            width: min(85%, 420px);
-            min-height: 48px;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .loader-dots::after {
-            content: '';
-            display: inline-block;
-            width: 1.5em;
-            text-align: left;
-            animation: loadingDots 1.2s steps(4, end) infinite;
-        }
-
-        @keyframes loadingDots {
-            0% { content: ''; }
-            25% { content: '.'; }
-            50% { content: '..'; }
-            75%, 100% { content: '...'; }
-        }
-        
-        /* --- PENGATURAN WARNA & DASAR --- */
+        /* --- VARIABEL TEMA SUPER GLASS --- */
         :root {
             --primary-blue: #2563eb;
             --dark-blue: #1e3a8a;
@@ -82,6 +16,37 @@
             --white: #ffffff;
             --text-dark: #1f2937;
             --text-gray: #6b7280;
+            --bg-body: #f8fafc;
+            /* Super Glass Settings */
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: blur(25px) saturate(200%);
+            --shadow-color: rgba(37, 99, 235, 0.1);
+            --footer-bg: rgba(15, 23, 42, 0.9);
+            --orb-1: #3b82f6;
+            --orb-2: #8b5cf6;
+        }
+
+        [data-theme="dark"] {
+            --primary-blue: #3b82f6;
+            --dark-blue: #93c5fd; 
+            --light-blue: #1e293b;
+            --white: #0f172a; 
+            --text-dark: #f8fafc;
+            --text-gray: #94a3b8;
+            --bg-body: #020617; 
+            /* Super Glass Settings Dark */
+            --glass-bg: rgba(15, 23, 42, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(25px) saturate(150%);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --footer-bg: rgba(2, 6, 23, 0.9);
+            --orb-1: #1d4ed8;
+            --orb-2: #4c1d95;
+        }
+
+        html, body, header, .mobile-menu, footer, #page-loader {
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
         }
 
         * {
@@ -91,231 +56,117 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 90px;
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 
         body {
-            background-color: #f8fafc;
+            background-color: var(--bg-body);
             color: var(--text-dark);
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* --- NAVBAR ATAS DENGAN EFEK ULTRA GLASS IPHONE --- */
-        header {
+        /* --- BACKGROUND GLOWING ORBS (Agar Kaca Terlihat) --- */
+        .bg-orb {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 65px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6%;
-            z-index: 1000;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            backdrop-filter: blur(40px) saturate(200%);
-            -webkit-backdrop-filter: blur(40px) saturate(200%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.15rem;
-            color: var(--dark-blue);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .logo-img {
-            width: 38px;
-            height: 38px;
-            object-fit: cover;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            transition: background 0.5s ease;
+            pointer-events: none;
         }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--orb-1); }
+        .orb-2 { bottom: 10%; right: -10%; width: 40vw; height: 40vw; background: var(--orb-2); }
 
-        /* --- TOMBOL HAMBURGER (Garis 3 ke X) --- */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 18px;
-            cursor: pointer;
-            z-index: 1001;
+        ::-webkit-scrollbar { width: 8px; height: 8px;}
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-blue); border-radius: 10px; }
+
+        /* --- SUPER GLASS CLASS UTILITY --- */
+        .glass-element {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--shadow-color);
+            transition: all 0.4s ease;
         }
+        .glass-element:hover { box-shadow: 0 12px 40px var(--shadow-color); }
 
-        .hamburger .bar {
-            width: 100%;
-            height: 2.5px;
-            background-color: var(--dark-blue);
-            border-radius: 5px;
-            transition: all 0.4s ease-in-out;
+        /* --- LOADING SCREEN --- */
+        #page-loader {
+            position: fixed; inset: 0; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 22px; background: var(--bg-body);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
+        #page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-spinner {
+            width: 58px; height: 58px; border: 5px solid var(--glass-bg);
+            border-top-color: var(--primary-blue); border-radius: 50%;
+            animation: loaderSpin 0.8s linear infinite;
+        }
+        @keyframes loaderSpin { to { transform: rotate(360deg); } }
+        .loader-title { color: var(--dark-blue); font-size: 1.25rem; font-weight: 800; }
+        .loader-quote { width: min(85%, 420px); min-height: 48px; color: var(--text-gray); font-size: 0.9rem; text-align: center; font-weight: 600; }
 
+        /* --- NAVBAR SUPER GLASS --- */
+        header {
+            position: fixed; top: 0; width: 100%; height: 70px; display: flex;
+            justify-content: space-between; align-items: center; padding: 0 5%; z-index: 1000;
+        }
+        .logo { font-weight: 800; font-size: 1.15rem; color: var(--dark-blue); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid var(--primary-blue); }
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+
+        /* DARK MODE TOGGLE */
+        .theme-switch { display: inline-block; height: 28px; position: relative; width: 54px; }
+        .theme-switch input { display:none; }
+        .slider {
+            background-color: #cbd5e1; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;
+        }
+        .slider i { font-size: 11px; color: white; z-index: 1; }
+        .slider:before { background-color: white; bottom: 4px; content: ""; height: 20px; left: 4px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: var(--primary-blue); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        /* HAMBURGER */
+        .hamburger { display: flex; flex-direction: column; justify-content: space-between; width: 28px; height: 18px; cursor: pointer; z-index: 1001; }
+        .hamburger .bar { width: 100%; height: 2.5px; background-color: var(--dark-blue); border-radius: 5px; transition: all 0.4s; }
         .hamburger.active .bar:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
         .hamburger.active .bar:nth-child(2) { opacity: 0; }
         .hamburger.active .bar:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-        /* --- MOBILE MENU OVERLAY (Gaya Ultra Glass iOS) --- */
+        /* MOBILE MENU OVERLAY */
         .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(50px) saturate(200%);
-            -webkit-backdrop-filter: blur(50px) saturate(200%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s ease;
-            transform: translateY(-20px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 999; opacity: 0; pointer-events: none; transition: all 0.4s ease; transform: translateY(-20px);
         }
-
-        .mobile-menu.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-
-        .mobile-menu a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 15px 0;
-            transition: color 0.3s;
-            position: relative;
-        }
-
+        .mobile-menu.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .mobile-menu a { text-decoration: none; color: var(--text-dark); font-size: 1.3rem; font-weight: 600; margin: 15px 0; }
         .mobile-menu a:hover { color: var(--primary-blue); }
 
-        .mobile-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-blue);
-            transition: width 0.3s ease;
-        }
-
-        .mobile-menu a:hover::after { width: 100%; }
-
         /* --- SECTION BERANDA --- */
-        #beranda {
-            margin-top: 100px;
-            padding: 20px 5%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .hero-title {
-            color: var(--text-dark);
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .hero-animated-text {
-            color: var(--primary-blue);
-            font-size: 2.5rem;
-            font-weight: 800;
-            min-height: 60px; 
-        }
-        
-        .fade-text {
-            display: inline-block;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 1;
-        }
+        #beranda { margin-top: 100px; padding: 20px 5%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 25px; }
+        .hero-title { color: var(--text-dark); font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
+        .hero-animated-text { color: var(--primary-blue); font-size: 2.5rem; font-weight: 800; min-height: 60px; }
+        .fade-text { display: inline-block; transition: opacity 0.5s ease-in-out; opacity: 1; }
         .fade-text.hidden { opacity: 0; }
-
-        .hero-desc {
-            color: var(--text-gray);
-            max-width: 600px;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 400px;
-        }
-
+        .hero-desc { color: var(--text-gray); max-width: 600px; font-size: 1rem; line-height: 1.6; font-weight: 600; margin-bottom: 10px; }
+        .hero-buttons { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 400px; }
         .btn-primary, .btn-secondary {
-            width: 100%;
-            padding: 15px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
+            width: 100%; padding: 15px; border-radius: 30px; text-decoration: none; font-weight: 600;
+            display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.3s;
         }
-
-        .btn-primary {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-        }
-
+        .btn-primary { background-color: var(--primary-blue); color: #ffffff; box-shadow: 0 4px 15px var(--shadow-color); }
+        .btn-secondary { background-color: transparent; color: var(--primary-blue); border: 2px solid var(--primary-blue); }
         .btn-primary:hover, .btn-secondary:hover { transform: translateY(-3px); }
+        
+        .hero-img-container { width: 100%; max-width: 800px; margin-top: 20px; border-radius: 20px; overflow: hidden; }
+        .hero-img-container img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
 
-        .hero-img-container {
-            width: 100%;
-            max-width: 800px;
-            margin-top: 20px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .hero-img-container img {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* --- ANIMASI BERLOMPATAN (BOUNCE IN) --- */
-        .bounce-hide {
-            opacity: 0;
-            transform: translateY(40px);
-        }
-        .bounce-show {
-            animation: bounceIn 0.8s cubic-bezier(0.28, 0.84, 0.42, 1) forwards;
-        }
+        .bounce-hide { opacity: 0; transform: translateY(40px); }
+        .bounce-show { animation: bounceIn 0.8s cubic-bezier(0.28, 0.84, 0.42, 1) forwards; }
         @keyframes bounceIn {
             0% { opacity: 0; transform: translateY(50px); }
             50% { opacity: 1; transform: translateY(-10px); }
@@ -323,381 +174,211 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- GLOBAL SECTION STYLES --- */
-        section:not(#beranda) {
-            padding: 60px 5%;
-            max-width: 1200px;
-            margin: auto;
-        }
+        section:not(#beranda) { padding: 60px 5%; max-width: 1200px; margin: auto; }
+        .section-title { text-align: center; color: var(--dark-blue); font-size: 2rem; margin-bottom: 40px; font-weight: 800; }
 
-        .section-title {
-            text-align: center;
-            color: var(--dark-blue);
-            font-size: 2rem;
-            margin-bottom: 40px;
-            font-weight: 800;
-        }
-
-        /* --- TENTANG KELAS DENGAN GRAFIK --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .about-card {
-            background: var(--white);
-            padding: 30px 20px;
-            border-radius: 15px;
-            border-top: 4px solid var(--primary-blue);
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .about-icon {
-            font-size: 3rem;
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-            background: var(--light-blue);
-            padding: 15px;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .about-card h3 { color: var(--dark-blue); margin-bottom: 10px; font-weight: 800; }
+        /* --- CARDS KELAS (DENGAN EFEK KACA) --- */
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .about-card { padding: 30px 20px; border-radius: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; border-top: 4px solid var(--primary-blue) !important; }
+        .about-icon { font-size: 3rem; color: var(--primary-blue); margin-bottom: 15px; }
+        .about-card h3 { color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
         .about-card p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.6; }
 
-        /* --- STRUKTUR KELAS & TEKS SAMAR --- */
-        .watermark-ig {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            opacity: 0.4;
-            letter-spacing: 1px;
-            margin-bottom: -15px;
-            font-weight: 600;
-        }
-
-        .scroll-wrapper {
-            display: flex;
-            overflow-x: auto;
-            gap: 25px;
-            padding: 20px 10px 40px;
-            scroll-snap-type: x mandatory;
-        }
-        
-        .scroll-wrapper::-webkit-scrollbar { height: 8px; }
-        .scroll-wrapper::-webkit-scrollbar-thumb { background: var(--primary-blue); border-radius: 10px; }
-
-        .anggota-card {
-            min-width: 250px;
-            background: var(--white);
-            border-radius: 15px;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            scroll-snap-align: start;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .absen-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(30, 58, 138, 0.85);
-            backdrop-filter: blur(5px);
-            color: var(--white);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 5;
-        }
-
-        .foto-profil {
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            background-color: var(--light-blue);
-            background-size: cover;
-            background-position: center;
-        }
-
-        .info-anggota {
-            padding: 20px;
-            background: var(--white);
-            text-align: center;
-            flex-grow: 1;
-            border-top: 2px solid var(--light-blue);
-        }
-
+        /* --- STRUKTUR KELAS --- */
+        .scroll-wrapper { display: flex; overflow-x: auto; gap: 25px; padding: 20px 10px 40px; scroll-snap-type: x mandatory; }
+        .anggota-card { min-width: 250px; border-radius: 15px; position: relative; scroll-snap-align: start; overflow: hidden; display: flex; flex-direction: column; }
+        .absen-badge { position: absolute; top: 15px; right: 15px; background: rgba(30,58,138,0.85); backdrop-filter: blur(5px); color: #fff; padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; z-index: 5; }
+        .foto-profil { width: 100%; aspect-ratio: 4/5; background-color: rgba(0,0,0,0.1); background-size: cover; background-position: center; }
+        .info-anggota { padding: 20px; text-align: center; flex-grow: 1; border-top: 1px solid var(--glass-border); }
         .info-anggota h4 { font-size: 1.2rem; color: var(--text-dark); margin-bottom: 5px; font-weight: 800;}
         .info-anggota p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 15px; font-weight: 600;}
         .info-anggota a { color: var(--primary-blue); text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;}
 
-        /* --- JADWAL PEMBELAJARAN --- */
-        .jadwal-container {
-            width: 100%;
-            overflow-x: auto;
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            min-width: 600px;
-        }
-        th, td { padding: 15px; border-bottom: 1px solid #e5e7eb; }
-        th { background-color: var(--primary-blue); color: var(--white); font-weight: 600;}
-        tr:hover { background-color: var(--light-blue); }
+        /* --- JADWAL --- */
+        .jadwal-container { width: 100%; overflow-x: auto; border-radius: 15px; }
+        table { width: 100%; border-collapse: collapse; text-align: center; min-width: 600px; }
+        th, td { padding: 15px; border-bottom: 1px solid var(--glass-border); color: var(--text-dark);}
+        th { background-color: var(--primary-blue); color: #ffffff; font-weight: 600;}
 
-        /* --- GALERI DENGAN BINGKAI ELEGANT --- */
-        .galeri-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            justify-content: center;
-        }
-        
-        .galeri-item {
-            width: 100%;
-            aspect-ratio: 4/3;
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.12), 0 5px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(37, 99, 235, 0.15);
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .galeri-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
-        }
-
-        .galeri-img-inner {
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Foto galeri */
-        .galeri-img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .galeri-item.gambar-error::after {
-            content: 'Foto gagal dimuat';
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-gray);
-            font-weight: 600;
-            background: var(--light-blue);
-            border-radius: 8px;
-        }
+        /* --- GALERI --- */
+        .galeri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; justify-content: center; }
+        .galeri-item { width: 100%; aspect-ratio: 4/3; border-radius: 12px; padding: 10px; cursor: pointer; position: relative; transition: transform 0.3s ease; }
+        .galeri-item:hover { transform: translateY(-5px) scale(1.02); }
+        .galeri-img { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 8px; pointer-events: none; }
 
         /* --- STATISTIK --- */
-        .stat-icon-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-blue);
-            margin-bottom: -10px;
-        }
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .stat-card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-bottom: 4px solid var(--primary-blue);
-        }
-        .stat-card h2 { font-size: 2.5rem; color: var(--dark-blue); }
+        .stat-icon-title { text-align: center; font-size: 2.5rem; color: var(--primary-blue); margin-bottom: -10px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; margin-top: 20px; }
+        .stat-card { padding: 30px; border-radius: 15px; border-bottom: 4px solid var(--primary-blue) !important; }
+        .stat-card h2 { font-size: 2.5rem; color: var(--text-dark); }
         .stat-card p { color: var(--text-gray); font-weight: 600; margin-top: 5px;}
 
-        /* --- FOOTER --- */
-        footer {
-            background: #0f172a;
-            color: var(--white);
-            padding: 30px 5%;
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+        footer { background: var(--footer-bg); backdrop-filter: blur(20px); color: #ffffff; padding: 30px 5%; margin-top: 50px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer-left { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
+        .footer-left img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .footer-right a { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; text-decoration: none; transition: background 0.3s; }
+        .footer-right a:hover { background: var(--primary-blue); }
 
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 800;
-            font-size: 1.2rem;
+        /* ====================================================== */
+        /* --- STYLING INTERACTIVE LIGHTBOX (GALERI) ---          */
+        /* ====================================================== */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 999999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s ease;
         }
+        #lightbox.show { opacity: 1; visibility: visible; }
+        
+        /* Tombol Silang (X) */
+        .lb-close {
+            position: absolute; top: 20px; right: 30px; font-size: 45px;
+            color: rgba(255,255,255,0.7); cursor: pointer; transition: 0.3s;
+            z-index: 2; line-height: 1;
+        }
+        .lb-close:hover { color: #fff; transform: scale(1.1); }
 
-        .footer-left img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
+        /* Tombol Navigasi < > */
+        .lb-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.2);
+            font-size: 24px; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; backdrop-filter: blur(10px); transition: 0.3s;
+            z-index: 2;
         }
+        .lb-nav:hover { background: var(--primary-blue); border-color: var(--primary-blue); }
+        .lb-prev { left: 20px; }
+        .lb-next { right: 20px; }
 
-        .footer-center {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            text-align: center;
+        /* Gambar Lightbox */
+        #lb-img {
+            max-width: 90%; max-height: 80vh; border-radius: 12px;
+            object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
+        
+        /* Animasi saat ganti gambar */
+        .lb-img-fade { opacity: 0; transform: scale(0.95); }
 
-        .footer-right a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: background 0.3s;
+        /* Titik Indikator */
+        .lb-dots-container {
+            position: absolute; bottom: 30px; display: flex; gap: 12px;
+            background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 30px;
+            backdrop-filter: blur(10px);
         }
-
-        .footer-right a:hover {
-            background: var(--primary-blue);
+        .lb-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: rgba(255,255,255,0.3); cursor: pointer; transition: 0.3s;
         }
+        .lb-dot:hover { background: rgba(255,255,255,0.7); }
+        .lb-dot.active { background: var(--primary-blue); transform: scale(1.3); box-shadow: 0 0 10px var(--primary-blue); }
 
         @media (max-width: 768px) {
             .hero-title { font-size: 1.5rem; }
             .hero-animated-text { font-size: 2rem; min-height: 50px; }
             .stat-grid { grid-template-columns: 1fr; }
             footer { flex-direction: column; text-align: center; }
+            .lb-nav { width: 40px; height: 40px; font-size: 18px; }
+            .lb-prev { left: 10px; } .lb-next { right: 10px; }
         }
     </style>
 </head>
 <body>
 
-<div id="page-loader" aria-label="Memuat halaman">
+    <!-- GLOWING ORBS BACKGROUND -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <div id="page-loader">
         <div class="loader-spinner"></div>
-        <div class="loader-title">IX A CLASS<span class="loader-dots"></span></div>
+        <div class="loader-title">IX A CLASS</div>
         <div id="loader-quote" class="loader-quote"></div>
     </div>
 
-    <!-- NAVBAR ULTRA GLASS IPHONE -->
-    <header>
+    <!-- NAVBAR -->
+    <header class="glass-element" style="border-radius: 0; border-top: none; border-left: none; border-right: none;">
         <a href="#beranda" class="logo">
             <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="logo-img"> IX A CLASS
         </a>
-        <div class="hamburger" id="hamburger-btn">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+        <div class="nav-actions">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider">
+                        <i class="fa-solid fa-sun"></i>
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                </label>
+            </div>
+            <div class="hamburger" id="hamburger-btn">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
         </div>
     </header>
 
-    <!-- MOBILE MENU OVERLAY -->
-    <div class="mobile-menu" id="mobile-menu">
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu glass-element" id="mobile-menu">
         <a href="#beranda" class="menu-link">Beranda</a>
         <a href="#tentang" class="menu-link">Tentang</a>
         <a href="#anggota" class="menu-link">Anggota</a>
         <a href="#jadwal" class="menu-link">Jadwal</a>
         <a href="#galeri" class="menu-link">Galeri</a>
         <a href="#statistik" class="menu-link">Statistik</a>
-        <a href="#kontak" class="menu-link">Kontak</a>
     </div>
 
     <!-- BERANDA -->
     <section id="beranda" class="bounce-hide">
         <h2 class="hero-title">Kami Adalah</h2>
-        
-        <div class="hero-animated-text">
-            <span id="text-slider" class="fade-text">ANAK BU ROIDA S.PD</span>
-        </div>
-
+        <div class="hero-animated-text"><span id="text-slider" class="fade-text">ANAK BU ROIDA S.PD</span></div>
         <p class="hero-desc">Wadah kreativitas, inovasi, dan persaudaraan para siswa IX A masa depan. Unggul dalam akademik, solid dalam kebersamaan.</p>
-
         <div class="hero-buttons">
             <a href="#tentang" class="btn-primary">Jelajahi Kelas &rarr;</a>
-            <a href="#galeri" class="btn-secondary">Lihat Galeri Foto</a>
         </div>
-
-        <div class="hero-img-container">
+        <div class="hero-img-container glass-element">
             <img src="https://files.catbox.moe/wd7lxx.jpg" alt="Foto Logo Kelas IX A">
         </div>
     </section>
 
-    <!-- TENTANG KELAS -->
+    <!-- TENTANG -->
     <section id="tentang">
         <h2 class="section-title bounce-hide">TENTANG KELAS KAMI</h2>
         <div class="about-grid">
-            <div class="about-card bounce-hide">
+            <div class="about-card glass-element bounce-hide">
                 <div class="about-icon"><i class="fa-solid fa-rocket"></i></div>
                 <h3>Visi Kelas</h3>
-                <p>Menjadi kelas yang solid, berprestasi, dan selalu mengedepankan kebersamaan dalam belajar maupun bermain.</p>
+                <p>Menjadi kelas yang solid, berprestasi, dan mengedepankan kebersamaan dalam belajar.</p>
             </div>
-            <div class="about-card bounce-hide">
+            <div class="about-card glass-element bounce-hide">
                 <div class="about-icon"><i class="fa-solid fa-bullseye"></i></div>
                 <h3>Misi Kelas</h3>
-                <p>1. Menjaga kekompakan kelas.<br>2. Saling membantu dalam akademik.<br>3. Mengharumkan nama sekolah.</p>
+                <p>1. Menjaga kekompakan kelas.<br>2. Saling membantu.<br>3. Mengharumkan nama sekolah.</p>
             </div>
-            <div class="about-card bounce-hide">
+            <div class="about-card glass-element bounce-hide">
                 <div class="about-icon"><i class="fa-solid fa-glasses"></i></div>
                 <h3>Wali Kelas</h3>
-                <p><strong>Ibu Roida S.Pd</strong><br>Beliau adalah pembimbing kami yang sabar dan selalu mendukung potensi setiap anak IX A.</p>
+                <p><strong>Ibu Roida S.Pd</strong><br>Pembimbing kami yang sabar dan selalu mendukung potensi siswa.</p>
             </div>
         </div>
     </section>
 
-    <!-- STRUKTUR KELAS -->
+    <!-- ANGGOTA -->
     <section id="anggota">
         <h2 class="section-title bounce-hide">STRUKTUR KELAS</h2>
- 
-        <div class="scroll-wrapper bounce-hide" id="container-anggota">
-            <!-- Data anggota via JS -->
-        </div>
+        <div class="scroll-wrapper bounce-hide" id="container-anggota"></div>
     </section>
 
-    <!-- JADWAL PEMBELAJARAN -->
+    <!-- JADWAL -->
     <section id="jadwal">
         <h2 class="section-title bounce-hide">JADWAL PEMBELAJARAN</h2>
-        <div class="jadwal-container bounce-hide">
+        <div class="jadwal-container glass-element bounce-hide">
             <table>
                 <thead>
-                    <tr>
-                        <th>Jam</th>
-                        <th>Senin</th>
-                        <th>Selasa</th>
-                        <th>Rabu</th>
-                        <th>Kamis</th>
-                        <th>Jumat</th>
-                    </tr>
+                    <tr><th>Jam</th><th>Senin</th><th>Selasa</th><th>Rabu</th><th>Kamis</th><th>Jumat</th></tr>
                 </thead>
-                <tbody id="tbody-jadwal">
-                    <!-- Jadwal via JS -->
-                </tbody>
+                <tbody id="tbody-jadwal"></tbody>
             </table>
         </div>
     </section>
@@ -705,8 +386,9 @@
     <!-- GALERI -->
     <section id="galeri">
         <h2 class="section-title bounce-hide">GALERI KELAS</h2>
+        <p style="text-align: center; color: var(--text-gray); margin-top: -25px; margin-bottom: 25px; font-weight: 600;" class="bounce-hide">Klik foto untuk melihat lebih detail</p>
         <div class="galeri-grid" id="container-galeri">
-            <!-- Galeri via JS -->
+            <!-- Galeri Inject via JS -->
         </div>
     </section>
 
@@ -715,96 +397,76 @@
         <div class="stat-icon-title bounce-hide"><i class="fa-solid fa-chart-pie"></i></div>
         <h2 class="section-title bounce-hide" style="margin-top: 10px;">STATISTIK</h2>
         <div class="stat-grid">
-            <div class="stat-card bounce-hide">
-                <h2>32</h2>
-                <p>Total Anggota</p>
-            </div>
-            <div class="stat-card bounce-hide">
-                <h2>12</h2>
-                <p>Guru Pengajar</p>
-            </div>
-            <div class="stat-card bounce-hide">
-                <h2>15</h2>
-                <p>Mata Pelajaran</p>
-            </div>
+            <div class="stat-card glass-element bounce-hide"><h2>26</h2><p>Total Anggota</p></div>
+            <div class="stat-card glass-element bounce-hide"><h2>12</h2><p>Guru Pengajar</p></div>
+            <div class="stat-card glass-element bounce-hide"><h2>15</h2><p>Mata Pelajaran</p></div>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer id="kontak">
-        <div class="footer-left">
-            <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo"> IX A
-        </div>
-        <div class="footer-center">
-            &copy; 2026 IX A. Edited By Sam.
-        </div>
-        <div class="footer-right">
-            <a href="https://www.instagram.com/9a.admirable?igsh=cHJ5cDViYzZkN3oz" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-        </div>
+        <div class="footer-left"><img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo"> IX A</div>
+        <div class="footer-center">&copy; 2026 IX A. Edited By Sam.</div>
+        <div class="footer-right"><a href="https://www.instagram.com/9a.admirable" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
     </footer>
+
+    <!-- ========================================== -->
+    <!-- INTERACTIVE LIGHTBOX (GALERI OVERLAY)      -->
+    <!-- ========================================== -->
+    <div id="lightbox">
+        <span class="lb-close" onclick="tutupLightbox()">&times;</span>
+        
+        <button class="lb-nav lb-prev" onclick="geserLightbox(-1)">&#10094;</button>
+        
+        <img id="lb-img" src="" alt="Gambar Diperbesar">
+        
+        <button class="lb-nav lb-next" onclick="geserLightbox(1)">&#10095;</button>
+        
+        <div class="lb-dots-container" id="lb-dots-container">
+            <!-- Titik (Dots) Inject via JS -->
+        </div>
+    </div>
 
     <!-- JAVASCRIPT -->
     <script>
-    
-    // --- LOADING 3 DETIK + QUOTE ACAK ---
-        const loader = document.getElementById('page-loader');
-        const loaderQuote = document.getElementById('loader-quote');
-
-        const quotesGenZ = [
-            'Nggak harus ngebut, yang penting tetap jalan.',
-            'Progress kecil tetap progress. Jangan kalah sama mager.',
-            'Hari ini belajar, besok tinggal flex hasilnya.',
-            'Kalau belum bisa, berarti belum selesai belajarnya.',
-            'Fokus ke progress, bukan ke validasi orang.',
-            'Hidup bukan lomba. Tapi kalau bisa maju, ya maju.',
-            'Mager boleh, nyerah jangan. Malu sama WiFi.',
-            'Jangan overthinking, kerjain dulu. Otak belakangan protes.',
-            'Pelan-pelan asal konsisten. NPC juga bisa naik level.',
-            'Kita nggak harus sempurna, cukup jangan jadi beban kelompok.',
-            'Semua ada waktunya. Termasuk deadline yang akhirnya mengejar.',
-            'Kalau gagal, evaluasi. Kalau berhasil, jangan langsung songong.'
-        ];
-
-        loaderQuote.textContent = '“' + quotesGenZ[Math.floor(Math.random() * quotesGenZ.length)] + '”';
-
-        const mulaiLoading = Date.now();
-        const durasiLoading = 3000;
-
-        window.addEventListener('load', () => {
-            const sisaWaktu = Math.max(0, durasiLoading - (Date.now() - mulaiLoading));
-
-            setTimeout(() => {
-                loader.classList.add('hide');
-                document.body.classList.add('page-loaded');
-
-                setTimeout(() => {
-                    loader.remove();
-                }, 550);
-            }, sisaWaktu);
+        // --- DARK MODE ---
+        const toggleSwitch = document.getElementById('checkbox');
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') toggleSwitch.checked = true;
+        }
+        toggleSwitch.addEventListener('change', (e) => {
+            let mode = e.target.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
         });
-        
+
+        // --- LOADING ---
+        const quotesGenZ = ['Nggak harus ngebut, yang penting tetap jalan.', 'Fokus ke progress, bukan ke validasi orang.', 'Pelan-pelan asal konsisten.'];
+        document.getElementById('loader-quote').textContent = '“' + quotesGenZ[Math.floor(Math.random() * quotesGenZ.length)] + '”';
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('page-loader').classList.add('hide');
+            }, 1000); // 1 detik loading
+        });
+
+        // --- HAMBURGER ---
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        const menuLinks = document.querySelectorAll('.menu-link');
-
         hamburgerBtn.addEventListener('click', () => {
             hamburgerBtn.classList.toggle('active');
             mobileMenu.classList.toggle('active');
         });
-
-        menuLinks.forEach(link => {
+        document.querySelectorAll('.menu-link').forEach(link => {
             link.addEventListener('click', () => {
-                hamburgerBtn.classList.remove('active');
-                mobileMenu.classList.remove('active');
+                hamburgerBtn.classList.remove('active'); mobileMenu.classList.remove('active');
             });
         });
 
+        // --- ANIMASI TEKS HERO ---
         const textSlider = document.getElementById('text-slider');
         const listTeks = ["ANAK BU ROIDA S.PD", "IX A CLASS"];
         let indeksTeks = 0;
-
         setInterval(() => {
             textSlider.classList.add('hidden');
             setTimeout(() => {
@@ -814,107 +476,159 @@
             }, 500); 
         }, 3000);
 
+        // --- ANIMASI SCROLL ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('bounce-show');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('bounce-show'); });
         }, { threshold: 0.15 }); 
+        document.querySelectorAll('.bounce-hide').forEach((el) => observer.observe(el));
+        window.onload = () => document.getElementById('beranda').classList.add('bounce-show');
 
-        document.querySelectorAll('.bounce-hide').forEach((el) => {
-            observer.observe(el);
-        });
-
-        window.onload = () => {
-            document.getElementById('beranda').classList.add('bounce-show');
-        }
-
+        // --- DATA ANGGOTA & JADWAL ---
         const anggotaData = [
             { absen: '-', nama: "Roida S.Pd", peran: "Wali Kelas", ig: "@ig_guru" },
             { absen: '01', nama: "Budi Santoso", peran: "Ketua Kelas", ig: "@budis" },
             { absen: '02', nama: "Siti Aminah", peran: "Wakil Ketua", ig: "@sitia" },
-            { absen: '03', nama: "Andi Saputra", peran: "Sekretaris 1", ig: "@andisap" },
-            { absen: '04', nama: "Rina Melati", peran: "Sekretaris 2", ig: "@rinam" },
-            { absen: '05', nama: "Dika Pratama", peran: "Bendahara 1", ig: "@dikap" },
-            { absen: '06', nama: "Maya Putri", peran: "Bendahara 2", ig: "@mayap" },
-            { absen: '07', nama: "Samuel", peran: "Anggota", ig: "@samuel" },
-            { absen: '08', nama: "Kevin Wijaya", peran: "Anggota", ig: "@kevinw" },
-            { absen: '09', nama: "Nisa Salsabila", peran: "Anggota", ig: "@nisas" },
-            { absen: '10', nama: "Reza Pahlevi", peran: "Anggota", ig: "@rezap" }
+            { absen: '03', nama: "Andi Saputra", peran: "Sekretaris 1", ig: "@andisap" }
         ];
-
         const containerAnggota = document.getElementById('container-anggota');
         anggotaData.forEach(orang => {
-            let fotoURL = `https://via.placeholder.com/1080x1350/eff6ff/2563eb?text=${orang.nama.charAt(0)}`;
-            
             containerAnggota.innerHTML += `
-                <div class="anggota-card">
+                <div class="anggota-card glass-element">
                     <span class="absen-badge">${orang.absen !== '-' ? 'No. ' + orang.absen : 'Guru'}</span>
-                    <div class="foto-profil" style="background-image: url('${fotoURL}')"></div>
+                    <div class="foto-profil" style="background-image: url('https://via.placeholder.com/1080x1350/eff6ff/2563eb?text=${orang.nama.charAt(0)}')"></div>
                     <div class="info-anggota">
-                        <h4>${orang.nama}</h4>
-                        <p>${orang.peran}</p>
-                        <a href="https://instagram.com/${orang.ig.replace('@', '')}" target="_blank">
-                            <i class="fa-brands fa-instagram"></i> ${orang.ig}
-                        </a>
+                        <h4>${orang.nama}</h4><p>${orang.peran}</p>
                     </div>
-                </div>
-            `;
+                </div>`;
         });
 
-        const mapel = ["Matematika", "IPA", "IPS", "B. Inggris", "B. Indo", "PJOK", "Seni Budaya", "Prakarya", "Agama", "PKn", "Istirahat"];
-        const tbodyJadwal = document.getElementById('tbody-jadwal');
-        
-        for (let i = 1; i <= 10; i++) {
-            if(i === 4 || i === 8) {
-                tbodyJadwal.innerHTML += `
-                    <tr>
-                        <td><strong>${i}</strong></td>
-                        <td colspan="5" style="background:var(--light-blue); color:var(--dark-blue); font-weight:bold;">ISTIRAHAT</td>
-                    </tr>
-                `;
-            } else {
-                tbodyJadwal.innerHTML += `
-                    <tr>
-                        <td><strong>${i}</strong></td>
-                        <td>${mapel[Math.floor(Math.random() * 10)]}</td>
-                        <td>${mapel[Math.floor(Math.random() * 10)]}</td>
-                        <td>${mapel[Math.floor(Math.random() * 10)]}</td>
-                        <td>${mapel[Math.floor(Math.random() * 10)]}</td>
-                        <td>${mapel[Math.floor(Math.random() * 10)]}</td>
-                    </tr>
-                `;
-            }
-        }
+                // --- JADWAL PEMBELAJARAN REAL ---
+        const jadwalPelajaran = [
+            ["IPA", "Kebudimuliaan", "PRAMUKA", "B. Ind", "SENAM/KEBERSIHAN"],
+            ["IPA", "Agama Katolik", "Matematika", "B. Ind", "IPS"],
+            ["IPA", "Agama Katolik", "Matematika", "B. Ind", "IPS"],
+            ["Pancasila", "Agama Katolik", "Bahasa Indonesia", "PJOK", "Mulok"],
+            ["Pancasila", "Bahasa Indonesia", "Bahasa Indonesia", "PJOK", "Mulok"],
+            ["Seni Budaya", "Bahasa Indonesia", "Bahasa Indonesia", "PJOK", "B. Ing"],
+            ["Seni Budaya", "Bahasa Indonesia", "IPS", "B. Ing", "B. Ing"],
+            ["Seni Budaya", "Bimbingan Konseling", "IPS", "B. Ing", "—"],
+            ["Seni Budaya", "Matematika", "IPA", "Matematika", "—"],
+            ["Seni Budaya", "Matematika", "IPA", "—", "—"]
+        ];
 
-        const containerGaleri = document.getElementById('container-galeri');
+        const tbodyJadwal = document.getElementById('tbody-jadwal');
+        tbodyJadwal.innerHTML = ''; // Memastikan tabel kosong sebelum diisi
+
+        jadwalPelajaran.forEach((hari, index) => {
+            let jamKe = index + 1;
+            tbodyJadwal.innerHTML += `
+                <tr>
+                    <td><strong>${jamKe}</strong></td>
+                    <td>${hari[0]}</td>
+                    <td>${hari[1]}</td>
+                    <td>${hari[2]}</td>
+                    <td>${hari[3]}</td>
+                    <td>${hari[4]}</td>
+                </tr>
+            `;
+        });
+        
+        
+        // ==========================================
+        // LOGIKA LIGHTBOX (GALERI)
+        // ==========================================
         const kumpulanFoto = [
             'https://files.catbox.moe/c294mo.jpg',
             'https://files.catbox.moe/eyu0oa.jpg',
-            'https://files.catbox.moe/qvqjz2.jpg'
+            'https://files.catbox.moe/qvqjz2.jpg',
+            'https://files.catbox.moe/wd7lxx.jpg' // Tambah 1 foto lagi biar slidernya terasa
         ];
 
-        // Gunakan elemen <img> agar gambar galeri lebih mudah dimuat
-        // dan bisa menampilkan fallback jika URL gagal.
+        const containerGaleri = document.getElementById('container-galeri');
+        const lbDotsContainer = document.getElementById('lb-dots-container');
+        let indexAktif = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lb-img');
+
+        // Buat HTML Gambar Galeri & HTML Titik Navigasi
         kumpulanFoto.forEach((url, index) => {
+            // 1. Masukkan ke halaman galeri
             containerGaleri.innerHTML += `
-                <div class="galeri-item bounce-hide">
-                    <img
-                        src="${url}"
-                        alt="Foto Galeri ${index + 1}"
-                        class="galeri-img"
-                        loading="lazy"
-                        onerror="this.style.display='none'; this.parentElement.classList.add('gambar-error');"
-                    >
+                <div class="galeri-item glass-element bounce-hide" onclick="bukaLightbox(${index})">
+                    <img src="${url}" alt="Foto ${index + 1}" class="galeri-img" loading="lazy">
                 </div>
             `;
+            // 2. Masukkan titik (...) ke dalam Lightbox
+            lbDotsContainer.innerHTML += `
+                <div class="lb-dot" id="dot-${index}" onclick="lompatKeGambar(${index})"></div>
+            `;
+        });
+        document.querySelectorAll('#container-galeri .bounce-hide').forEach(el => observer.observe(el));
+
+        function bukaLightbox(index) {
+            indexAktif = index;
+            updateTampilanLightbox();
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Kunci scroll layar utama
+        }
+
+        function tutupLightbox() {
+            lightbox.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Buka kunci scroll
+        }
+
+        function geserLightbox(arah) {
+            lbImg.classList.add('lb-img-fade'); // Efek hilang sejenak
+            
+            setTimeout(() => {
+                indexAktif += arah;
+                
+                // Jika lewat batas, putar balik
+                if (indexAktif >= kumpulanFoto.length) indexAktif = 0;
+                if (indexAktif < 0) indexAktif = kumpulanFoto.length - 1;
+                
+                updateTampilanLightbox();
+                lbImg.classList.remove('lb-img-fade'); // Munculkan lagi
+            }, 200); // Waktu ganti gambar 0.2 detik
+        }
+
+        function lompatKeGambar(index) {
+            if (indexAktif === index) return; // Abaikan jika klik titik yang sama
+            lbImg.classList.add('lb-img-fade');
+            setTimeout(() => {
+                indexAktif = index;
+                updateTampilanLightbox();
+                lbImg.classList.remove('lb-img-fade');
+            }, 200);
+        }
+
+        function updateTampilanLightbox() {
+            lbImg.src = kumpulanFoto[indexAktif];
+            
+            // Reset semua titik, lalu nyalakan titik yang aktif
+            document.querySelectorAll('.lb-dot').forEach(dot => dot.classList.remove('active'));
+            document.getElementById(`dot-${indexAktif}`).classList.add('active');
+        }
+
+        // --- FITUR SWIPE UNTUK HP ---
+        let sentuhanAwalX = 0;
+        let sentuhanAkhirX = 0;
+
+        lightbox.addEventListener('touchstart', e => {
+            sentuhanAwalX = e.changedTouches[0].screenX;
         });
 
-        // Daftarkan elemen galeri yang baru dibuat ke IntersectionObserver.
-        document.querySelectorAll('#container-galeri .bounce-hide').forEach((el) => {
-            observer.observe(el);
+        lightbox.addEventListener('touchend', e => {
+            sentuhanAkhirX = e.changedTouches[0].screenX;
+            prosesSwipe();
         });
+
+        function prosesSwipe() {
+            // Jika geser ke kiri lebih dari 50px (Next)
+            if (sentuhanAkhirX < sentuhanAwalX - 50) geserLightbox(1);
+            // Jika geser ke kanan lebih dari 50px (Prev)
+            if (sentuhanAkhirX > sentuhanAwalX + 50) geserLightbox(-1);
+        }
     </script>
 </body>
 </html>
