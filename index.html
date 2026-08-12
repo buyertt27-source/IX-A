@@ -194,11 +194,56 @@
         .info-anggota p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 15px; font-weight: 600;}
         .info-anggota a { color: var(--primary-blue); text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;}
 
-        /* --- JADWAL --- */
-        .jadwal-container { width: 100%; overflow-x: auto; border-radius: 15px; }
-        table { width: 100%; border-collapse: collapse; text-align: center; min-width: 600px; }
-        th, td { padding: 15px; border-bottom: 1px solid var(--glass-border); color: var(--text-dark);}
-        th { background-color: var(--primary-blue); color: #ffffff; font-weight: 600;}
+        /* --- KARTU JADWAL HARIAN (SWIPE) --- */
+        .jadwal-scroll { 
+            display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px; 
+            scroll-snap-type: x mandatory; 
+        }
+        .hari-card { 
+            min-width: 260px; flex-shrink: 0; scroll-snap-align: start; 
+            border-radius: 15px; overflow: hidden; border-top: 4px solid var(--primary-blue);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .hari-header { 
+            background: var(--primary-blue); color: #ffffff; text-align: center; 
+            padding: 12px; font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .hari-body { padding: 15px; }
+        .mapel-item { 
+            display: flex; align-items: center; padding: 10px 0; 
+            border-bottom: 1px dashed var(--glass-border); color: var(--text-dark); 
+            font-size: 0.95rem; font-weight: 600; 
+        }
+        .mapel-item:last-child { border-bottom: none; }
+        .jam-badge { 
+            background: var(--dark-blue); color: #ffffff; width: 28px; height: 28px; 
+            display: flex; justify-content: center; align-items: center; 
+            border-radius: 50%; font-size: 0.8rem; margin-right: 12px; flex-shrink: 0; font-weight: 800;
+        }
+
+
+        /* Logika Transisi Halus (Smooth Transition) */
+        .tab-pane {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: all 0.4s ease-in-out;
+        }
+        .tab-pane.active {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .tab-btn, .tab-divider { font-size: 1.5rem; }
+        }
+        
 
         /* --- GALERI --- */
         .galeri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; justify-content: center; }
@@ -284,6 +329,86 @@
             .lb-nav { width: 40px; height: 40px; font-size: 18px; }
             .lb-prev { left: 10px; } .lb-next { right: 10px; }
         }
+                /* --- EFEK ZOOM MENU TAB --- */
+        .tab-btn {
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transform: scale(1);
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            color: var(--primary-blue) !important;
+            transform: scale(1.2) !important; /* Efek Zoom In */
+            text-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+               /* --- KOTAK PIKET (1 HARI) & TOMBOL ARAH SUPER NGEGLASS --- */
+        .piket-wrapper {
+            display: flex; justify-content: center; align-items: center; gap: 15px; 
+            padding: 10px 0 30px; width: 100%; position: relative;
+        }
+        
+        /* TOMBOL ARAH SUPER KACA */
+        .piket-nav-btn {
+            background: rgba(255, 255, 255, 0.25); /* Lebih bening */
+            color: var(--primary-blue);
+            border: 1px solid rgba(255, 255, 255, 0.7); /* Pinggiran kaca tegas */
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            width: 50px; height: 50px; border-radius: 50%; display: flex; 
+            justify-content: center; align-items: center; font-size: 1.4rem; 
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); flex-shrink: 0;
+            z-index: 10;
+        }
+        .piket-nav-btn:hover { 
+            background: rgba(255, 255, 255, 0.4); 
+            transform: scale(1.15) translateY(-2px); /* Membesar dan sedikit terangkat */
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.3), inset 0 2px 15px rgba(255, 255, 255, 0.9);
+        }
+        
+        /* KOTAK KARTU PIKET */
+        .piket-card-container { flex-grow: 1; max-width: 350px; overflow: hidden; perspective: 1200px; }
+        .piket-card {
+            text-align: center; padding: 30px 20px; border-radius: 15px;
+            border-top: 4px solid var(--primary-blue) !important;
+            /* Efek Bouncy yang sangat smooth */
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            opacity: 1; transform: translateX(0) scale(1) rotateY(0deg);
+            filter: blur(0px);
+        }
+        
+        /* Animasi Transisi 3D Lebig Bagus */
+        .piket-card.fade-out-left { 
+            opacity: 0; 
+            transform: translateX(-100px) scale(0.8) rotateY(-25deg); 
+            filter: blur(6px);
+        }
+        .piket-card.fade-out-right { 
+            opacity: 0; 
+            transform: translateX(100px) scale(0.8) rotateY(25deg);
+            filter: blur(6px);
+        }
+        
+        .piket-hari { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
+        .piket-nama { display: flex; flex-direction: column; gap: 10px; font-weight: 600; font-size: 1.05rem; }
+        .piket-nama span { 
+            background: var(--bg-body); padding: 10px 15px; border-radius: 10px; 
+            border: 1px solid var(--glass-border); color: var(--text-dark); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+        .piket-nama span:hover { transform: scale(1.05); border-color: var(--primary-blue); }
+
+        }
+        
+        /* Animasi Transisi Halus (Smooth Slide & Fade) */
+        .piket-card.fade-out-left { opacity: 0; transform: translateX(-40px) scale(0.95); }
+        .piket-card.fade-out-right { opacity: 0; transform: translateX(40px) scale(0.95); }
+        
+        .piket-hari { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
+        .piket-nama { display: flex; flex-direction: column; gap: 10px; font-weight: 600; font-size: 1.05rem; }
+        .piket-nama span { background: var(--bg-body); padding: 10px 15px; border-radius: 10px; border: 1px solid var(--glass-border); color: var(--text-dark); box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
+        
     </style>
 </head>
 <body>
@@ -371,17 +496,86 @@
     </section>
 
     <!-- JADWAL -->
+        <!-- JADWAL & PIKET -->
     <section id="jadwal">
-        <h2 class="section-title bounce-hide">JADWAL PEMBELAJARAN</h2>
-        <div class="jadwal-container glass-element bounce-hide">
-            <table>
-                <thead>
-                    <tr><th>Jam</th><th>Senin</th><th>Selasa</th><th>Rabu</th><th>Kamis</th><th>Jumat</th></tr>
-                </thead>
-                <tbody id="tbody-jadwal"></tbody>
-            </table>
+                                        <!-- Tab Header Tengah (Pola Segitiga & Efek Zoom) -->
+        <div class="bounce-hide" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 35px;">
+            <span style="font-size: 1.1rem; font-weight: 800; color: var(--primary-blue); letter-spacing: 3px; margin-bottom: 8px; text-transform: uppercase;">Jadwal</span>
+            
+            <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 25px; flex-wrap: nowrap; width: 100%;">
+                <h2 class="tab-btn active" id="btn-jadwal" onclick="switchTab('jadwal')" style="margin: 0; font-size: clamp(1.1rem, 4vw, 1.5rem); white-space: nowrap;">PELAJARAN</h2>
+                <span class="tab-divider" style="margin: 0; font-size: clamp(1.1rem, 4vw, 1.5rem); opacity: 0.5;">|</span>
+                <h2 class="tab-btn" id="btn-piket" onclick="switchTab('piket')" style="margin: 0; font-size: clamp(1.1rem, 4vw, 1.5rem); white-space: nowrap;">PIKET</h2>
+            </div>
+        </div>
+
+        <!-- Wadah Konten Animasi -->
+        <div class="tab-content-container bounce-hide">
+            
+            <!-- KONTEN: JADWAL PELAJARAN (TETAP SEPERTI SEBELUMNYA) -->
+            <div id="content-jadwal" class="tab-pane active">
+                <div class="jadwal-scroll" id="scroll-jadwal">
+                    <!-- Data Jadwal di-inject otomatis via JS (Biarkan seperti yang sudah ada) -->
+                </div>
+            </div>
+
+            <!-- KONTEN: PIKET KOTAK 1 HARI & TOMBOL ARAH -->
+            <div id="content-piket" class="tab-pane">
+                <div class="piket-wrapper">
+                    <!-- Tombol Kiri -->
+                    <button class="piket-nav-btn" onclick="geserPiket(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    
+                    <!-- Kotak Piket -->
+                    <div class="piket-card-container">
+                        <div id="piket-card-view" class="piket-card glass-element">
+                            <div id="piket-hari" class="piket-hari">SENIN</div>
+                            <div id="piket-nama" class="piket-nama">
+                                <span>Constan</span><span>Inke</span><span>Weidy</span><span>Kenny</span><span>Selena</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tombol Kanan -->
+                    <button class="piket-nav-btn" onclick="geserPiket(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- Wadah Konten Animasi -->
+        <div class="tab-content-container bounce-hide">
+            
+                        <!-- KONTEN: JADWAL PELAJARAN (BISA DI-SWIPE) -->
+            <div id="content-jadwal" class="tab-pane active">
+                <div class="jadwal-scroll" id="scroll-jadwal">
+                    <!-- Kartu Hari akan di-inject otomatis via JavaScript -->
+                </div>
+            </div>
+
+
+            <!-- KONTEN: PIKET -->
+            <div id="content-piket" class="tab-pane glass-element jadwal-container">
+                <table>
+                    <thead>
+                        <tr><th>Hari</th><th>Nama Petugas Piket</th></tr>
+                    </thead>
+                    <tbody id="tbody-piket">
+                        <tr><td><strong>Senin</strong></td><td>Constan, Inke, Weidy, Kenny, Selena</td></tr>
+                        <tr><td><strong>Selasa</strong></td><td>Reynaldi, Cantika, Felisia, Michael, Vio</td></tr>
+                        <tr><td><strong>Rabu</strong></td><td>Gedaliah, Jason V, Jesselin, Jovan, Stephen</td></tr>
+                        <tr><td><strong>Kamis</strong></td><td>Jason F, Yasinta, Samuel, Valentino, Anas</td></tr>
+                        <tr><td><strong>Jumat</strong></td><td>Pieter, Simson, Laudya, Jason N, Eka, Evelyn</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </section>
+
 
     <!-- GALERI -->
     <section id="galeri">
@@ -441,13 +635,13 @@
             localStorage.setItem('theme', mode);
         });
 
-        // --- LOADING ---
+                // --- LOADING ---
         const quotesGenZ = ['Nggak harus ngebut, yang penting tetap jalan.', 'Fokus ke progress, bukan ke validasi orang.', 'Pelan-pelan asal konsisten.'];
         document.getElementById('loader-quote').textContent = '“' + quotesGenZ[Math.floor(Math.random() * quotesGenZ.length)] + '”';
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 document.getElementById('page-loader').classList.add('hide');
-            }, 1000); // 1 detik loading
+            }, 300); // Dipercepat jadi 300ms
         });
 
         // --- HAMBURGER ---
@@ -502,7 +696,7 @@
                 </div>`;
         });
 
-                // --- JADWAL PEMBELAJARAN REAL ---
+                        // --- JADWAL PEMBELAJARAN (KARTU PER HARI) ---
         const jadwalPelajaran = [
             ["IPA", "Kebudimuliaan", "PRAMUKA", "B. Ind", "SENAM/KEBERSIHAN"],
             ["IPA", "Agama Katolik", "Matematika", "B. Ind", "IPS"],
@@ -516,23 +710,38 @@
             ["Seni Budaya", "Matematika", "IPA", "—", "—"]
         ];
 
-        const tbodyJadwal = document.getElementById('tbody-jadwal');
-        tbodyJadwal.innerHTML = ''; // Memastikan tabel kosong sebelum diisi
+        const namaHari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+        const scrollJadwal = document.getElementById('scroll-jadwal');
+        scrollJadwal.innerHTML = ''; // Kosongkan kontainer
 
-        jadwalPelajaran.forEach((hari, index) => {
-            let jamKe = index + 1;
-            tbodyJadwal.innerHTML += `
-                <tr>
-                    <td><strong>${jamKe}</strong></td>
-                    <td>${hari[0]}</td>
-                    <td>${hari[1]}</td>
-                    <td>${hari[2]}</td>
-                    <td>${hari[3]}</td>
-                    <td>${hari[4]}</td>
-                </tr>
+        // Looping untuk membuat kartu per HARI
+        for (let h = 0; h < namaHari.length; h++) {
+            let listMapelHTML = '';
+            
+            // Looping untuk mengambil JAM pada hari tersebut
+            for (let j = 0; j < jadwalPelajaran.length; j++) {
+                let mapel = jadwalPelajaran[j][h];
+                
+                // Jika mata pelajaran bukan "—" (kosong), maka tampilkan
+                if (mapel !== "—") {
+                    listMapelHTML += `
+                        <div class="mapel-item">
+                            <span class="jam-badge">${j + 1}</span> 
+                            <span>${mapel}</span>
+                        </div>
+                    `;
+                }
+            }
+
+            // Gabungkan menjadi satu kartu utuh
+            scrollJadwal.innerHTML += `
+                <div class="hari-card glass-element">
+                    <div class="hari-header">${namaHari[h]}</div>
+                    <div class="hari-body">${listMapelHTML}</div>
+                </div>
             `;
-        });
-        
+        }
+
         
         // ==========================================
         // LOGIKA LIGHTBOX (GALERI)
@@ -629,6 +838,58 @@
             // Jika geser ke kanan lebih dari 50px (Prev)
             if (sentuhanAkhirX > sentuhanAwalX + 50) geserLightbox(-1);
         }
+                // --- LOGIKA TAB JADWAL & PIKET ---
+        function switchTab(tabId) {
+            // 1. Hapus class 'active' dari semua tombol judul (Jadwal/Piket)
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // 2. Sembunyikan semua tabel konten
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            // 3. Tambahkan class 'active' HANYA ke tab yang diklik agar muncul dengan animasi
+            document.getElementById('btn-' + tabId).classList.add('active');
+            document.getElementById('content-' + tabId).classList.add('active');
+        }
+                // ==========================================
+        // LOGIKA KARTU PIKET INTERAKTIF
+        // ==========================================
+        const dataPiket = [
+            { hari: "Senin", nama: ["Constan", "Inke", "Weidy", "Kenny", "Selena"] },
+            { hari: "Selasa", nama: ["Reynaldi", "Cantika", "Felisia", "Michael", "Vio"] },
+            { hari: "Rabu", nama: ["Gedaliah", "Jason V", "Jesselin", "Jovan", "Stephen"] },
+            { hari: "Kamis", nama: ["Jason F", "Yasinta", "Samuel", "Valentino", "Anas"] },
+            { hari: "Jumat", nama: ["Pieter", "Simson", "Laudya", "Jason N", "Eka", "Evelyn"] }
+        ];
+
+        let indexPiket = 0;
+        const piketCard = document.getElementById('piket-card-view');
+        const piketHari = document.getElementById('piket-hari');
+        const piketNama = document.getElementById('piket-nama');
+
+                function geserPiket(arah) {
+            if(arah > 0) {
+                piketCard.classList.add('fade-out-left'); 
+            } else {
+                piketCard.classList.add('fade-out-right');
+            }
+
+            // Tunggu 450ms agar animasi 3D bounce selesai sebelum ganti data
+            setTimeout(() => {
+                indexPiket += arah;
+                if (indexPiket >= dataPiket.length) indexPiket = 0; 
+                if (indexPiket < 0) indexPiket = dataPiket.length - 1; 
+
+                piketHari.textContent = dataPiket[indexPiket].hari;
+                
+                let htmlNama = '';
+                dataPiket[indexPiket].nama.forEach(n => {
+                    htmlNama += `<span>${n}</span>`;
+                });
+                piketNama.innerHTML = htmlNama;
+
+                piketCard.classList.remove('fade-out-left', 'fade-out-right');
+            }, 450); 
+        }
+        
     </script>
 </body>
 </html>
