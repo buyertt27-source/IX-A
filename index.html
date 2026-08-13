@@ -17,7 +17,6 @@
             --text-dark: #1f2937;
             --text-gray: #6b7280;
             --bg-body: #f8fafc;
-            /* Super Glass Settings */
             --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.5);
             --glass-blur: blur(25px) saturate(200%);
@@ -35,7 +34,6 @@
             --text-dark: #f8fafc;
             --text-gray: #94a3b8;
             --bg-body: #020617; 
-            /* Super Glass Settings Dark */
             --glass-bg: rgba(15, 23, 42, 0.3);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-blur: blur(25px) saturate(150%);
@@ -65,7 +63,7 @@
             position: relative;
         }
 
-        /* --- BACKGROUND GLOWING ORBS (Agar Kaca Terlihat) --- */
+        /* --- BACKGROUND GLOWING ORBS --- */
         .bg-orb {
             position: fixed;
             border-radius: 50%;
@@ -177,7 +175,7 @@
         section:not(#beranda) { padding: 60px 5%; max-width: 1200px; margin: auto; }
         .section-title { text-align: center; color: var(--dark-blue); font-size: 2rem; margin-bottom: 40px; font-weight: 800; }
 
-        /* --- CARDS KELAS (DENGAN EFEK KACA) --- */
+        /* --- CARDS KELAS --- */
         .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .about-card { padding: 30px 20px; border-radius: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; border-top: 4px solid var(--primary-blue) !important; }
         .about-icon { font-size: 3rem; color: var(--primary-blue); margin-bottom: 15px; }
@@ -191,8 +189,9 @@
         .foto-profil { width: 100%; aspect-ratio: 4/5; background-color: rgba(0,0,0,0.1); background-size: cover; background-position: center; }
         .info-anggota { padding: 20px; text-align: center; flex-grow: 1; border-top: 1px solid var(--glass-border); }
         .info-anggota h4 { font-size: 1.2rem; color: var(--text-dark); margin-bottom: 5px; font-weight: 800;}
-        .info-anggota p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 15px; font-weight: 600;}
+        .info-anggota p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 10px; font-weight: 600; text-transform: capitalize;}
         .info-anggota a { color: var(--primary-blue); text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;}
+        .info-anggota a:hover { text-decoration: underline; }
 
         /* --- KARTU JADWAL HARIAN (SWIPE) --- */
         .jadwal-scroll { 
@@ -221,8 +220,7 @@
             border-radius: 50%; font-size: 0.8rem; margin-right: 12px; flex-shrink: 0; font-weight: 800;
         }
 
-
-        /* Logika Transisi Halus (Smooth Transition) */
+        /* Logika Transisi Tab */
         .tab-pane {
             position: absolute;
             top: 0;
@@ -239,11 +237,7 @@
             visibility: visible;
             transform: translateY(0);
         }
-
-        @media (max-width: 768px) {
-            .tab-btn, .tab-divider { font-size: 1.5rem; }
-        }
-        
+        .tab-content-container { position: relative; }
 
         /* --- GALERI --- */
         .galeri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; justify-content: center; }
@@ -264,9 +258,7 @@
         .footer-right a { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; text-decoration: none; transition: background 0.3s; }
         .footer-right a:hover { background: var(--primary-blue); }
 
-        /* ====================================================== */
-        /* --- STYLING INTERACTIVE LIGHTBOX (GALERI) ---          */
-        /* ====================================================== */
+        /* --- LIGHTBOX --- */
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
@@ -276,16 +268,12 @@
             opacity: 0; visibility: hidden; transition: all 0.4s ease;
         }
         #lightbox.show { opacity: 1; visibility: visible; }
-        
-        /* Tombol Silang (X) */
         .lb-close {
             position: absolute; top: 20px; right: 30px; font-size: 45px;
             color: rgba(255,255,255,0.7); cursor: pointer; transition: 0.3s;
             z-index: 2; line-height: 1;
         }
         .lb-close:hover { color: #fff; transform: scale(1.1); }
-
-        /* Tombol Navigasi < > */
         .lb-nav {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255,255,255,0.2);
@@ -297,18 +285,12 @@
         .lb-nav:hover { background: var(--primary-blue); border-color: var(--primary-blue); }
         .lb-prev { left: 20px; }
         .lb-next { right: 20px; }
-
-        /* Gambar Lightbox */
         #lb-img {
             max-width: 90%; max-height: 80vh; border-radius: 12px;
             object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        
-        /* Animasi saat ganti gambar */
         .lb-img-fade { opacity: 0; transform: scale(0.95); }
-
-        /* Titik Indikator */
         .lb-dots-container {
             position: absolute; bottom: 30px; display: flex; gap: 12px;
             background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 30px;
@@ -321,15 +303,7 @@
         .lb-dot:hover { background: rgba(255,255,255,0.7); }
         .lb-dot.active { background: var(--primary-blue); transform: scale(1.3); box-shadow: 0 0 10px var(--primary-blue); }
 
-        @media (max-width: 768px) {
-            .hero-title { font-size: 1.5rem; }
-            .hero-animated-text { font-size: 2rem; min-height: 50px; }
-            .stat-grid { grid-template-columns: 1fr; }
-            footer { flex-direction: column; text-align: center; }
-            .lb-nav { width: 40px; height: 40px; font-size: 18px; }
-            .lb-prev { left: 10px; } .lb-next { right: 10px; }
-        }
-                /* --- EFEK ZOOM MENU TAB --- */
+        /* --- EFEK ZOOM MENU TAB --- */
         .tab-btn {
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
             transform: scale(1);
@@ -337,21 +311,19 @@
         }
         .tab-btn.active {
             color: var(--primary-blue) !important;
-            transform: scale(1.2) !important; /* Efek Zoom In */
+            transform: scale(1.2) !important;
             text-shadow: 0 4px 15px var(--shadow-color);
         }
 
-               /* --- KOTAK PIKET (1 HARI) & TOMBOL ARAH SUPER NGEGLASS --- */
+        /* --- KOTAK PIKET (1 HARI) & TOMBOL ARAH SUPER NGEGLASS --- */
         .piket-wrapper {
             display: flex; justify-content: center; align-items: center; gap: 15px; 
             padding: 10px 0 30px; width: 100%; position: relative;
         }
-        
-        /* TOMBOL ARAH SUPER KACA */
         .piket-nav-btn {
-            background: rgba(255, 255, 255, 0.25); /* Lebih bening */
+            background: rgba(255, 255, 255, 0.25);
             color: var(--primary-blue);
-            border: 1px solid rgba(255, 255, 255, 0.7); /* Pinggiran kaca tegas */
+            border: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(25px) saturate(200%);
             -webkit-backdrop-filter: blur(25px) saturate(200%);
@@ -362,22 +334,17 @@
         }
         .piket-nav-btn:hover { 
             background: rgba(255, 255, 255, 0.4); 
-            transform: scale(1.15) translateY(-2px); /* Membesar dan sedikit terangkat */
+            transform: scale(1.15) translateY(-2px);
             box-shadow: 0 12px 40px rgba(37, 99, 235, 0.3), inset 0 2px 15px rgba(255, 255, 255, 0.9);
         }
-        
-        /* KOTAK KARTU PIKET */
         .piket-card-container { flex-grow: 1; max-width: 350px; overflow: hidden; perspective: 1200px; }
         .piket-card {
             text-align: center; padding: 30px 20px; border-radius: 15px;
             border-top: 4px solid var(--primary-blue) !important;
-            /* Efek Bouncy yang sangat smooth */
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
             opacity: 1; transform: translateX(0) scale(1) rotateY(0deg);
             filter: blur(0px);
         }
-        
-        /* Animasi Transisi 3D Lebig Bagus */
         .piket-card.fade-out-left { 
             opacity: 0; 
             transform: translateX(-100px) scale(0.8) rotateY(-25deg); 
@@ -388,7 +355,6 @@
             transform: translateX(100px) scale(0.8) rotateY(25deg);
             filter: blur(6px);
         }
-        
         .piket-hari { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
         .piket-nama { display: flex; flex-direction: column; gap: 10px; font-weight: 600; font-size: 1.05rem; }
         .piket-nama span { 
@@ -399,16 +365,14 @@
         }
         .piket-nama span:hover { transform: scale(1.05); border-color: var(--primary-blue); }
 
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.5rem; }
+            .hero-animated-text { font-size: 2rem; min-height: 50px; }
+            .stat-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; text-align: center; }
+            .lb-nav { width: 40px; height: 40px; font-size: 18px; }
+            .lb-prev { left: 10px; } .lb-next { right: 10px; }
         }
-        
-        /* Animasi Transisi Halus (Smooth Slide & Fade) */
-        .piket-card.fade-out-left { opacity: 0; transform: translateX(-40px) scale(0.95); }
-        .piket-card.fade-out-right { opacity: 0; transform: translateX(40px) scale(0.95); }
-        
-        .piket-hari { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
-        .piket-nama { display: flex; flex-direction: column; gap: 10px; font-weight: 600; font-size: 1.05rem; }
-        .piket-nama span { background: var(--bg-body); padding: 10px 15px; border-radius: 10px; border: 1px solid var(--glass-border); color: var(--text-dark); box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
-        
     </style>
 </head>
 <body>
@@ -495,10 +459,8 @@
         <div class="scroll-wrapper bounce-hide" id="container-anggota"></div>
     </section>
 
-    <!-- JADWAL -->
-        <!-- JADWAL & PIKET -->
+    <!-- JADWAL & PIKET -->
     <section id="jadwal">
-                                        <!-- Tab Header Tengah (Pola Segitiga & Efek Zoom) -->
         <div class="bounce-hide" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 35px;">
             <span style="font-size: 1.1rem; font-weight: 800; color: var(--primary-blue); letter-spacing: 3px; margin-bottom: 8px; text-transform: uppercase;">Jadwal</span>
             
@@ -509,23 +471,17 @@
             </div>
         </div>
 
-        <!-- Wadah Konten Animasi -->
         <div class="tab-content-container bounce-hide">
-            
-            <!-- KONTEN: JADWAL PELAJARAN (TETAP SEPERTI SEBELUMNYA) -->
+            <!-- KONTEN: JADWAL PELAJARAN -->
             <div id="content-jadwal" class="tab-pane active">
-                <div class="jadwal-scroll" id="scroll-jadwal">
-                    <!-- Data Jadwal di-inject otomatis via JS (Biarkan seperti yang sudah ada) -->
-                </div>
+                <div class="jadwal-scroll" id="scroll-jadwal"></div>
             </div>
 
             <!-- KONTEN: PIKET KOTAK 1 HARI & TOMBOL ARAH -->
             <div id="content-piket" class="tab-pane">
                 <div class="piket-wrapper">
-                    <!-- Tombol Kiri -->
                     <button class="piket-nav-btn" onclick="geserPiket(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                     
-                    <!-- Kotak Piket -->
                     <div class="piket-card-container">
                         <div id="piket-card-view" class="piket-card glass-element">
                             <div id="piket-hari" class="piket-hari">SENIN</div>
@@ -535,55 +491,17 @@
                         </div>
                     </div>
                     
-                    <!-- Tombol Kanan -->
                     <button class="piket-nav-btn" onclick="geserPiket(1)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
-
-        </div>
-
-
-
-
-
-        <!-- Wadah Konten Animasi -->
-        <div class="tab-content-container bounce-hide">
-            
-                        <!-- KONTEN: JADWAL PELAJARAN (BISA DI-SWIPE) -->
-            <div id="content-jadwal" class="tab-pane active">
-                <div class="jadwal-scroll" id="scroll-jadwal">
-                    <!-- Kartu Hari akan di-inject otomatis via JavaScript -->
-                </div>
-            </div>
-
-
-            <!-- KONTEN: PIKET -->
-            <div id="content-piket" class="tab-pane glass-element jadwal-container">
-                <table>
-                    <thead>
-                        <tr><th>Hari</th><th>Nama Petugas Piket</th></tr>
-                    </thead>
-                    <tbody id="tbody-piket">
-                        <tr><td><strong>Senin</strong></td><td>Constan, Inke, Weidy, Kenny, Selena</td></tr>
-                        <tr><td><strong>Selasa</strong></td><td>Reynaldi, Cantika, Felisia, Michael, Vio</td></tr>
-                        <tr><td><strong>Rabu</strong></td><td>Gedaliah, Jason V, Jesselin, Jovan, Stephen</td></tr>
-                        <tr><td><strong>Kamis</strong></td><td>Jason F, Yasinta, Samuel, Valentino, Anas</td></tr>
-                        <tr><td><strong>Jumat</strong></td><td>Pieter, Simson, Laudya, Jason N, Eka, Evelyn</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
         </div>
     </section>
-
 
     <!-- GALERI -->
     <section id="galeri">
         <h2 class="section-title bounce-hide">GALERI KELAS</h2>
         <p style="text-align: center; color: var(--text-gray); margin-top: -25px; margin-bottom: 25px; font-weight: 600;" class="bounce-hide">Klik foto untuk melihat lebih detail</p>
-        <div class="galeri-grid" id="container-galeri">
-            <!-- Galeri Inject via JS -->
-        </div>
+        <div class="galeri-grid" id="container-galeri"></div>
     </section>
 
     <!-- STATISTIK -->
@@ -603,21 +521,13 @@
         <div class="footer-right"><a href="https://www.instagram.com/9a.admirable" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- INTERACTIVE LIGHTBOX (GALERI OVERLAY)      -->
-    <!-- ========================================== -->
+    <!-- LIGHTBOX -->
     <div id="lightbox">
         <span class="lb-close" onclick="tutupLightbox()">&times;</span>
-        
         <button class="lb-nav lb-prev" onclick="geserLightbox(-1)">&#10094;</button>
-        
         <img id="lb-img" src="" alt="Gambar Diperbesar">
-        
         <button class="lb-nav lb-next" onclick="geserLightbox(1)">&#10095;</button>
-        
-        <div class="lb-dots-container" id="lb-dots-container">
-            <!-- Titik (Dots) Inject via JS -->
-        </div>
+        <div class="lb-dots-container" id="lb-dots-container"></div>
     </div>
 
     <!-- JAVASCRIPT -->
@@ -635,13 +545,15 @@
             localStorage.setItem('theme', mode);
         });
 
-                // --- LOADING ---
+        // --- LOADING SCREEN ---
         const quotesGenZ = ['Nggak harus ngebut, yang penting tetap jalan.', 'Fokus ke progress, bukan ke validasi orang.', 'Pelan-pelan asal konsisten.'];
         document.getElementById('loader-quote').textContent = '“' + quotesGenZ[Math.floor(Math.random() * quotesGenZ.length)] + '”';
-        document.addEventListener('DOMContentLoaded', () => {
+        
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                document.getElementById('page-loader').classList.add('hide');
-            }, 3000); // Dipercepat jadi 300ms
+                const loader = document.getElementById('page-loader');
+                loader.classList.add('hide');
+            }, 1500); // Durasi loading 1.5 detik
         });
 
         // --- HAMBURGER ---
@@ -675,28 +587,40 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('bounce-show'); });
         }, { threshold: 0.15 }); 
         document.querySelectorAll('.bounce-hide').forEach((el) => observer.observe(el));
-        window.onload = () => document.getElementById('beranda').classList.add('bounce-show');
 
-        // --- DATA ANGGOTA & JADWAL ---
+        // --- DATA ANGGOTA (DIURUTKAN SESUAI PERMINTAAN) ---
         const anggotaData = [
-            { absen: '-', nama: "Roida S.Pd", peran: "Wali Kelas", ig: "@ig_guru" },
-            { absen: '01', nama: "Budi Santoso", peran: "Ketua Kelas", ig: "@budis" },
-            { absen: '02', nama: "Siti Aminah", peran: "Wakil Ketua", ig: "@sitia" },
-            { absen: '03', nama: "Andi Saputra", peran: "Sekretaris 1", ig: "@andisap" }
+            { absen: '-', nama: "Bu Roida S.Pd", peran: "Wali Kelas", foto: "https://files.catbox.moe/7aurrx.jpg", ig: null },
+            { absen: '1', nama: "Anastasya", peran: "Sekretaris 1", foto: "https://files.catbox.moe/3v7k5p.jpg", ig: "@sya.08110" },
+            { absen: '21', nama: "Selena", peran: "Sekretaris 2", foto: "https://files.catbox.moe/dijjl5.jpg", ig: "@sukai.ririi1999" },
+            { absen: '9', nama: "Jason Felix", peran: "Anggota", foto: "https://files.catbox.moe/wvcdlr.jpg", ig: null },
+            { absen: '10', nama: "Jason Natanael", peran: "Anggota", foto: "https://files.catbox.moe/ol3cb0.jpg", ig: "@nathanaelllldid" },
+            { absen: '13', nama: "Jovan", peran: "Anggota", foto: "https://files.catbox.moe/xz0f5g.jpg", ig: "@vanzz1821" },
+            { absen: '15', nama: "Laudia", peran: "Anggota", foto: "https://files.catbox.moe/eiytk7.jpg", ig: "@syalalalalauu" },
+            { absen: '17', nama: "Michael", peran: "Anggota", foto: "https://files.catbox.moe/b8aaif.jpg", ig: null },
+            { absen: '18', nama: "Reynaldi", peran: "Anggota", foto: "https://files.catbox.moe/jb3hj9.jpg", ig: "@re.ynaldi839" },
+            { absen: '19', nama: "Samuel", peran: "Anggota", foto: "https://files.catbox.moe/4vq1pu.jpg", ig: "@alwys.gabriel" },
+            { absen: '24', nama: "Vio", peran: "Anggota", foto: "https://files.catbox.moe/5bb2ad.jpg", ig: "@nthllzzz" },
+            { absen: '25', nama: "Weidy", peran: "Anggota", foto: "https://files.catbox.moe/tqee7y.jpg", ig: "@weidycs" }
         ];
+
         const containerAnggota = document.getElementById('container-anggota');
         anggotaData.forEach(orang => {
+            let igLink = orang.ig ? `<a href="https://instagram.com/${orang.ig.replace('@', '')}" target="_blank"><i class="fa-brands fa-instagram"></i> ${orang.ig}</a>` : `<span style="font-size: 0.85rem; color: var(--text-gray);">-</span>`;
+            
             containerAnggota.innerHTML += `
                 <div class="anggota-card glass-element">
                     <span class="absen-badge">${orang.absen !== '-' ? 'No. ' + orang.absen : 'Guru'}</span>
-                    <div class="foto-profil" style="background-image: url('https://via.placeholder.com/1080x1350/eff6ff/2563eb?text=${orang.nama.charAt(0)}')"></div>
+                    <div class="foto-profil" style="background-image: url('${orang.foto}')"></div>
                     <div class="info-anggota">
-                        <h4>${orang.nama}</h4><p>${orang.peran}</p>
+                        <h4>${orang.nama}</h4>
+                        <p>${orang.peran}</p>
+                        <div>${igLink}</div>
                     </div>
                 </div>`;
         });
 
-                        // --- JADWAL PEMBELAJARAN (KARTU PER HARI) ---
+        // --- JADWAL PEMBELAJARAN ---
         const jadwalPelajaran = [
             ["IPA", "Kebudimuliaan", "PRAMUKA", "B. Ind", "SENAM/KEBERSIHAN"],
             ["IPA", "Agama Katolik", "Matematika", "B. Ind", "IPS"],
@@ -712,17 +636,12 @@
 
         const namaHari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
         const scrollJadwal = document.getElementById('scroll-jadwal');
-        scrollJadwal.innerHTML = ''; // Kosongkan kontainer
+        scrollJadwal.innerHTML = '';
 
-        // Looping untuk membuat kartu per HARI
         for (let h = 0; h < namaHari.length; h++) {
             let listMapelHTML = '';
-            
-            // Looping untuk mengambil JAM pada hari tersebut
             for (let j = 0; j < jadwalPelajaran.length; j++) {
                 let mapel = jadwalPelajaran[j][h];
-                
-                // Jika mata pelajaran bukan "—" (kosong), maka tampilkan
                 if (mapel !== "—") {
                     listMapelHTML += `
                         <div class="mapel-item">
@@ -732,8 +651,6 @@
                     `;
                 }
             }
-
-            // Gabungkan menjadi satu kartu utuh
             scrollJadwal.innerHTML += `
                 <div class="hari-card glass-element">
                     <div class="hari-header">${namaHari[h]}</div>
@@ -742,15 +659,12 @@
             `;
         }
 
-        
-        // ==========================================
-        // LOGIKA LIGHTBOX (GALERI)
-        // ==========================================
+        // --- GALERI & LIGHTBOX ---
         const kumpulanFoto = [
             'https://files.catbox.moe/c294mo.jpg',
             'https://files.catbox.moe/eyu0oa.jpg',
             'https://files.catbox.moe/qvqjz2.jpg',
-            'https://files.catbox.moe/wd7lxx.jpg' // Tambah 1 foto lagi biar slidernya terasa
+            'https://files.catbox.moe/wd7lxx.jpg'
         ];
 
         const containerGaleri = document.getElementById('container-galeri');
@@ -759,15 +673,12 @@
         const lightbox = document.getElementById('lightbox');
         const lbImg = document.getElementById('lb-img');
 
-        // Buat HTML Gambar Galeri & HTML Titik Navigasi
         kumpulanFoto.forEach((url, index) => {
-            // 1. Masukkan ke halaman galeri
             containerGaleri.innerHTML += `
                 <div class="galeri-item glass-element bounce-hide" onclick="bukaLightbox(${index})">
                     <img src="${url}" alt="Foto ${index + 1}" class="galeri-img" loading="lazy">
                 </div>
             `;
-            // 2. Masukkan titik (...) ke dalam Lightbox
             lbDotsContainer.innerHTML += `
                 <div class="lb-dot" id="dot-${index}" onclick="lompatKeGambar(${index})"></div>
             `;
@@ -778,31 +689,27 @@
             indexAktif = index;
             updateTampilanLightbox();
             lightbox.classList.add('show');
-            document.body.style.overflow = 'hidden'; // Kunci scroll layar utama
+            document.body.style.overflow = 'hidden';
         }
 
         function tutupLightbox() {
             lightbox.classList.remove('show');
-            document.body.style.overflow = 'auto'; // Buka kunci scroll
+            document.body.style.overflow = 'auto';
         }
 
         function geserLightbox(arah) {
-            lbImg.classList.add('lb-img-fade'); // Efek hilang sejenak
-            
+            lbImg.classList.add('lb-img-fade');
             setTimeout(() => {
                 indexAktif += arah;
-                
-                // Jika lewat batas, putar balik
                 if (indexAktif >= kumpulanFoto.length) indexAktif = 0;
                 if (indexAktif < 0) indexAktif = kumpulanFoto.length - 1;
-                
                 updateTampilanLightbox();
-                lbImg.classList.remove('lb-img-fade'); // Munculkan lagi
-            }, 200); // Waktu ganti gambar 0.2 detik
+                lbImg.classList.remove('lb-img-fade');
+            }, 200);
         }
 
         function lompatKeGambar(index) {
-            if (indexAktif === index) return; // Abaikan jika klik titik yang sama
+            if (indexAktif === index) return;
             lbImg.classList.add('lb-img-fade');
             setTimeout(() => {
                 indexAktif = index;
@@ -813,45 +720,28 @@
 
         function updateTampilanLightbox() {
             lbImg.src = kumpulanFoto[indexAktif];
-            
-            // Reset semua titik, lalu nyalakan titik yang aktif
             document.querySelectorAll('.lb-dot').forEach(dot => dot.classList.remove('active'));
             document.getElementById(`dot-${indexAktif}`).classList.add('active');
         }
 
-        // --- FITUR SWIPE UNTUK HP ---
         let sentuhanAwalX = 0;
         let sentuhanAkhirX = 0;
-
-        lightbox.addEventListener('touchstart', e => {
-            sentuhanAwalX = e.changedTouches[0].screenX;
-        });
-
+        lightbox.addEventListener('touchstart', e => { sentuhanAwalX = e.changedTouches[0].screenX; });
         lightbox.addEventListener('touchend', e => {
             sentuhanAkhirX = e.changedTouches[0].screenX;
-            prosesSwipe();
+            if (sentuhanAkhirX < sentuhanAwalX - 50) geserLightbox(1);
+            if (sentuhanAkhirX > sentuhanAwalX + 50) geserLightbox(-1);
         });
 
-        function prosesSwipe() {
-            // Jika geser ke kiri lebih dari 50px (Next)
-            if (sentuhanAkhirX < sentuhanAwalX - 50) geserLightbox(1);
-            // Jika geser ke kanan lebih dari 50px (Prev)
-            if (sentuhanAkhirX > sentuhanAwalX + 50) geserLightbox(-1);
-        }
-                // --- LOGIKA TAB JADWAL & PIKET ---
+        // --- TAB SWITCHER (JADWAL & PIKET) ---
         function switchTab(tabId) {
-            // 1. Hapus class 'active' dari semua tombol judul (Jadwal/Piket)
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            // 2. Sembunyikan semua tabel konten
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-
-            // 3. Tambahkan class 'active' HANYA ke tab yang diklik agar muncul dengan animasi
             document.getElementById('btn-' + tabId).classList.add('active');
             document.getElementById('content-' + tabId).classList.add('active');
         }
-                // ==========================================
-        // LOGIKA KARTU PIKET INTERAKTIF
-        // ==========================================
+
+        // --- PIKET 1 HARI INTERAKTIF ---
         const dataPiket = [
             { hari: "Senin", nama: ["Constan", "Inke", "Weidy", "Kenny", "Selena"] },
             { hari: "Selasa", nama: ["Reynaldi", "Cantika", "Felisia", "Michael", "Vio"] },
@@ -865,14 +755,13 @@
         const piketHari = document.getElementById('piket-hari');
         const piketNama = document.getElementById('piket-nama');
 
-                function geserPiket(arah) {
+        function geserPiket(arah) {
             if(arah > 0) {
                 piketCard.classList.add('fade-out-left'); 
             } else {
                 piketCard.classList.add('fade-out-right');
             }
 
-            // Tunggu 450ms agar animasi 3D bounce selesai sebelum ganti data
             setTimeout(() => {
                 indexPiket += arah;
                 if (indexPiket >= dataPiket.length) indexPiket = 0; 
@@ -889,7 +778,6 @@
                 piketCard.classList.remove('fade-out-left', 'fade-out-right');
             }, 450); 
         }
-        
     </script>
 </body>
 </html>
