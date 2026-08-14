@@ -190,12 +190,12 @@
         }
         .photo-card:hover .photo-overlay-label { opacity: 1; }
 
-        /* --- LIQUID GLASS LIGHTBOX / MODAL VIEWER --- */
+        /* --- LIQUID GLASS LIGHTBOX / MODAL VIEWER (LEBIH TRANSPARAN & CLEAR) --- */
         #lightbox-modal {
             position: fixed; inset: 0; z-index: 99999;
-            background: rgba(2, 6, 23, 0.88);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(0, 0, 0, 0.45); /* Lebih transparan & clear agar latar belakang terlihat lebih jelas */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
         }
@@ -313,7 +313,7 @@
         <div class="loader-progress" id="loader-progress-text">Memuat foto (0/27)...</div>
     </div>
 
-    <!-- NAVBAR (DIPINDAH KELUAR AGAR FIXED / MENGIKUTI USER DENGAN BENAR) -->
+    <!-- NAVBAR (FIXED / MENGIKUTI USER) -->
     <header class="glass-element">
         <a href="index.html#beranda" class="logo">
             <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="logo-img"> IX A CLASS
