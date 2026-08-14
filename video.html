@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Video - IX A CLASS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e3a8a;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --bg-body: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: blur(25px) saturate(200%);
+            --shadow-color: rgba(37, 99, 235, 0.1);
+            --footer-bg: rgba(15, 23, 42, 0.9);
+            --orb-1: #3b82f6;
+            --orb-2: #8b5cf6;
+        }
+
+        [data-theme="dark"] {
+            --primary-blue: #3b82f6;
+            --dark-blue: #93c5fd; 
+            --light-blue: #1e293b;
+            --white: #0f172a; 
+            --text-dark: #f8fafc;
+            --text-gray: #94a3b8;
+            --bg-body: #020617; 
+            --glass-bg: rgba(15, 23, 42, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(25px) saturate(150%);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --footer-bg: rgba(2, 6, 23, 0.9);
+            --orb-1: #1d4ed8;
+            --orb-2: #4c1d95;
+        }
+
+        html, body, header, footer, #page-loader {
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND GLOWING ORBS --- */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--orb-1); }
+        .orb-2 { bottom: 10%; right: -10%; width: 40vw; height: 40vw; background: var(--orb-2); }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px;}
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-blue); border-radius: 10px; }
+
+        .glass-element {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--shadow-color);
+            transition: all 0.4s ease;
+        }
+
+        /* --- LOADING SCREEN --- */
+        #page-loader {
+            position: fixed; inset: 0; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 22px; background: var(--bg-body);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+        }
+        #page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-spinner {
+            width: 64px; height: 64px; border: 6px solid var(--glass-bg);
+            border-top-color: var(--primary-blue); border-radius: 50%;
+            animation: loaderSpin 0.8s linear infinite;
+        }
+        @keyframes loaderSpin { to { transform: rotate(360deg); } }
+        .loader-title { color: var(--dark-blue); font-size: 1.35rem; font-weight: 800; letter-spacing: 0.5px; }
+        .loader-quote { width: min(85%, 480px); color: var(--text-gray); font-size: 0.9rem; text-align: center; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.5; }
+        .loader-progress { font-size: 0.85rem; color: var(--primary-blue); font-weight: 700; margin-top: -10px; }
+
+        .main-content {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body.loaded .main-content {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px; display: flex;
+            justify-content: space-between; align-items: center; padding: 0 5%; z-index: 1000;
+            border-radius: 0; border-top: none; border-left: none; border-right: none;
+        }
+        .logo { font-weight: 800; font-size: 1.15rem; color: var(--dark-blue); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid var(--primary-blue); }
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+
+        .back-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--primary-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .back-btn:hover { background: var(--primary-blue); color: #fff; }
+
+        .theme-switch { display: inline-block; height: 28px; position: relative; width: 54px; }
+        .theme-switch input { display:none; }
+        .slider-toggle {
+            background-color: #cbd5e1; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;
+        }
+        .slider-toggle i { font-size: 11px; color: white; z-index: 1; }
+        .slider-toggle:before { background-color: white; bottom: 4px; content: ""; height: 20px; left: 4px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider-toggle { background-color: var(--primary-blue); }
+        input:checked + .slider-toggle:before { transform: translateX(26px); }
+
+        /* --- VIDEO CONTAINER --- */
+        .video-container {
+            max-width: 1200px;
+            margin: 120px auto 60px;
+            padding: 0 5%;
+        }
+
+        .page-header-title { text-align: center; color: var(--dark-blue); font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
+        .page-header-desc { text-align: center; color: var(--text-gray); font-weight: 600; margin-bottom: 40px; }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .video-card {
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 18px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            cursor: pointer;
+        }
+        .video-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: 0 15px 35px var(--shadow-color); 
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            border-radius: 14px;
+            pointer-events: none;
+        }
+
+        .video-overlay-preview {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        .video-card:hover .video-overlay-preview {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .play-btn-circle {
+            width: 55px;
+            height: 55px;
+            background: var(--primary-blue);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .video-card:hover .play-btn-circle {
+            transform: scale(1.15);
+        }
+
+        .video-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        /* --- SUPER LIQUID GLASS LIGHTBOX MODAL --- */
+        #video-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+            padding: 20px;
+        }
+
+        #video-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-container {
+            position: relative;
+            width: 100%;
+            max-width: 950px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(40px) saturate(220%);
+            -webkit-backdrop-filter: blur(40px) saturate(220%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: scale(0.85) translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #video-lightbox.active .lightbox-container {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Lightbox Top Header Bar (Judul & Tombol X yang Rapih) */
+        .lightbox-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        #lightbox-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .lightbox-close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lightbox-close-btn:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+        }
+
+        .lightbox-video-wrapper {
+            width: 100%;
+            max-height: 75vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-video-wrapper video {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            outline: none;
+            border-radius: 12px;
+        }
+
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 55%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        .lightbox-nav-btn:hover {
+            background: var(--primary-blue);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
+        }
+        .lightbox-prev { left: -25px; }
+        .lightbox-next { right: -25px; }
+
+        @media (max-width: 768px) {
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+            .lightbox-container { padding: 15px; margin-top: 40px; }
+        }
+
+        /* --- NAVIGATION CHOICE MODAL --- */
+        #nav-modal {
+            position: fixed; inset: 0; z-index: 99999;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 20px;
+        }
+        #nav-modal.active { opacity: 1; visibility: visible; }
+
+        .nav-modal-container {
+            width: 100%; max-width: 650px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #nav-modal.active .nav-modal-container { transform: translateY(0) scale(1); }
+
+        .nav-modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .nav-modal-title { color: #ffffff; font-size: 1.3rem; font-weight: 800; }
+        .nav-modal-close {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .nav-modal-close:hover { background: #ef4444; border-color: #ef4444; transform: scale(1.1); }
+
+        .nav-grid-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .nav-option-card {
+            display: flex; align-items: center; gap: 20px;
+            padding: 18px 22px; border-radius: 14px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            text-decoration: none; color: #ffffff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .nav-option-card:hover {
+            background: var(--primary-blue);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+        .nav-option-icon {
+            width: 50px; height: 50px; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.3rem; color: #ffffff; flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .nav-option-info h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 3px; }
+        .nav-option-info p { font-size: 0.82rem; color: rgba(255, 255, 255, 0.7); font-weight: 500; }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: var(--footer-bg); backdrop-filter: blur(20px); 
+            color: #ffffff; padding: 30px 5%; margin-top: 50px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); 
+        }
+        .footer-left { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
+        .footer-left img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .footer-right a { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; text-decoration: none; transition: background 0.3s; }
+        .footer-right a:hover { background: var(--primary-blue); }
+
+        @media (max-width: 768px) {
+            .page-header-title { font-size: 1.6rem; }
+            .video-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GLOWING ORBS BACKGROUND -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <!-- LOADING SCREEN -->
+    <div id="page-loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-title">IX A CLASS</div>
+        <div class="loader-quote">"gunakan jaringan yang optimal untuk pelanggan terbaik"</div>
+        <div class="loader-progress" id="loader-progress-text">Memuat video (0/5)...</div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="glass-element">
+        <a href="index.html#beranda" class="logo">
+            <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="logo-img"> IX A CLASS
+        </a>
+        <div class="nav-actions">
+            <button id="back-menu-trigger" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider-toggle">
+                        <i class="fa-solid fa-sun"></i>
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <div class="main-content">
+        <div class="video-container">
+            <h1 class="page-header-title">VIDEO KELAS IX A</h1>
+            <p class="page-header-desc">Kumpulan klip, kebersamaan, dan keseruan momen kelas.</p>
+
+            <div class="video-grid" id="video-grid-container">
+                <!-- Video Cards Generated by JS -->
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left"><img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo"> IX A</div>
+            <div class="footer-center">&copy; 2026 IX A. Edited By Sam.</div>
+            <div class="footer-right"><a href="https://www.instagram.com/9a.admirable" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
+        </footer>
+    </div>
+
+    <!-- VIDEO LIGHTBOX MODAL -->
+    <div id="video-lightbox">
+        <div class="lightbox-container">
+            <button class="lightbox-nav-btn lightbox-prev" id="lightbox-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="lightbox-nav-btn lightbox-next" id="lightbox-next"><i class="fa-solid fa-chevron-right"></i></button>
+            
+            <!-- Top bar yang rapi untuk Judul dan Tombol Close (X) -->
+            <div class="lightbox-top-bar">
+                <span id="lightbox-title">Video 1</span>
+                <button class="lightbox-close-btn" id="lightbox-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="lightbox-video-wrapper">
+                <video id="lightbox-video" controls>
+                    <source src="" type="video/mp4">
+                    Browser Anda tidak mendukung pemutaran video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION CHOICE MODAL -->
+    <div id="nav-modal">
+        <div class="nav-modal-container">
+            <div class="nav-modal-header">
+                <div class="nav-modal-title"><i class="fa-solid fa-compass"></i> Pilih Halaman Tujuan</div>
+                <div class="nav-modal-close" id="nav-modal-close-btn"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+            <div class="nav-grid-options">
+                <a href="index.html" class="nav-option-card">
+                    <div class="nav-option-icon"><i class="fa-solid fa-house"></i></div>
+                    <div class="nav-option-info">
+                        <h4>Halaman Utama</h4>
+                        <p>Kembali ke beranda utama kelas IX A</p>
+                    </div>
+                </a>
+                <a href="foto.html" class="nav-option-card">
+                    <div class="nav-option-icon"><i class="fa-solid fa-image"></i></div>
+                    <div class="nav-option-info">
+                        <h4>Foto</h4>
+                        <p>Lihat koleksi foto dokumentasi kegiatan kelas</p>
+                    </div>
+                </a>
+                <a href="champion.html" class="nav-option-card">
+                    <div class="nav-option-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="nav-option-info">
+                        <h4>Champion</h4>
+                        <p>Lihat daftar prestasi dan kejuaraan kelas</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const videoData = [
+            { url: "https://files.catbox.moe/0iaxge.mp4", title: "Video 1" },
+            { url: "https://files.catbox.moe/2zhke4.mp4", title: "Video 2" },
+            { url: "https://files.catbox.moe/5g7kwq.mp4", title: "Video 3" },
+            { url: "https://files.catbox.moe/rogmr3.mp4", title: "Video 4" },
+            { url: "https://files.catbox.moe/5v3ktn.mp4", title: "Video 5" },
+            { url: "https://files.catbox.moe/z7h1lt.mp4", title: "Video 6" },
+        ];
+
+        const gridContainer = document.getElementById('video-grid-container');
+        let currentIndex = 0;
+
+        // Render Cards Video di Grid Utama
+        videoData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'video-card glass-element';
+            card.innerHTML = `
+                <div class="video-wrapper">
+                    <video preload="metadata">
+                        <source src="${item.url}" type="video/mp4">
+                    </video>
+                    <div class="video-overlay-preview">
+                        <div class="play-btn-circle">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">
+                        <i class="fa-solid fa-circle-play" style="color: var(--primary-blue);"></i>
+                        <span>${item.title}</span>
+                    </div>
+                    <span class="video-tag">MP4 Video</span>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => {
+                openLightbox(index);
+            });
+
+            gridContainer.appendChild(card);
+        });
+
+        // Lightbox Elements
+        const lightbox = document.getElementById('video-lightbox');
+        const lightboxVideo = document.getElementById('lightbox-video');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const closeBtn = document.getElementById('lightbox-close');
+        const prevBtn = document.getElementById('lightbox-prev');
+        const nextBtn = document.getElementById('lightbox-next');
+
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightboxContent(false); // Manual play saat pertama kali dibuka dari kartu
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            lightboxVideo.pause();
+            lightboxVideo.currentTime = 0;
+        }
+
+        function updateLightboxContent(autoPlay = false) {
+            const currentVideo = videoData[currentIndex];
+            lightboxVideo.src = currentVideo.url;
+            lightboxTitle.innerText = currentVideo.title;
+            lightboxVideo.load();
+            
+            if (autoPlay) {
+                lightboxVideo.play().catch(error => {
+                    console.log("Autoplay dicegah oleh browser:", error);
+                });
+            }
+        }
+
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + videoData.length) % videoData.length;
+            updateLightboxContent(true); // Otomatis play saat tombol panah (><) diklik
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % videoData.length;
+            updateLightboxContent(true); // Otomatis play saat tombol panah (><) diklik
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key === 'ArrowRight') nextBtn.click();
+            }
+        });
+
+        // Preloader & Progress Tracking
+        function startPreloading() {
+            const progressText = document.getElementById('loader-progress-text');
+            let loadedCount = 0;
+            const total = videoData.length;
+
+            const promises = videoData.map((item) => {
+                return new Promise((resolve) => {
+                    const video = document.createElement('video');
+                    video.src = item.url;
+                    video.onloadeddata = video.onerror = () => {
+                        loadedCount++;
+                        progressText.innerText = `Memuat video (${loadedCount}/${total})...`;
+                        resolve();
+                    };
+                });
+            });
+
+            Promise.all(promises).then(() => {
+                setTimeout(() => {
+                    const loader = document.getElementById('page-loader');
+                    loader.classList.add('hide');
+                    document.body.classList.add('loaded');
+                }, 400);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', startPreloading);
+
+        // Navigation Choice Modal Logic
+        const navModal = document.getElementById('nav-modal');
+        const navTriggerBtn = document.getElementById('back-menu-trigger');
+        const navCloseBtn = document.getElementById('nav-modal-close-btn');
+
+        navTriggerBtn.addEventListener('click', () => {
+            navModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeNavModal() {
+            navModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        navCloseBtn.addEventListener('click', closeNavModal);
+        navModal.addEventListener('click', (e) => {
+            if (e.target === navModal) closeNavModal();
+        });
+
+        // Dark Mode Toggle Logic
+        const toggleSwitch = document.getElementById('checkbox');
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') toggleSwitch.checked = true;
+        }
+        toggleSwitch.addEventListener('change', (e) => {
+            let mode = e.target.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+        });
+    </script>
+</body>
+</html>
