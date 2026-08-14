@@ -133,10 +133,10 @@
             transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
         }
 
-        /* --- MODAL PILIH HALAMAN TUJUAN (SESUAI FOTO) --- */
+        /* --- MODAL PILIH HALAMAN TUJUAN (HITAM SEPERTI DI GAMBAR) --- */
         .nav-modal {
             position: fixed; inset: 0; z-index: 999999;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex; justify-content: center; align-items: center;
@@ -147,11 +147,12 @@
         
         .nav-modal-content {
             width: 100%; max-width: 480px;
-            background: var(--bg-body);
-            border: 1px solid var(--glass-border);
+            background: #111827; /* Warna hitam elegan sesuai gambar */
+            color: #f8fafc;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
             padding: 24px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
             transform: scale(0.85) translateY(20px);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -161,15 +162,16 @@
         .nav-modal-header {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px; padding-bottom: 12px;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .nav-modal-header h3 {
-            font-size: 1.15rem; font-weight: 800; color: var(--text-dark);
+            font-size: 1.15rem; font-weight: 800; color: #f8fafc;
             display: flex; align-items: center; gap: 10px;
         }
         .nav-modal-close {
-            background: var(--glass-bg); border: 1px solid var(--glass-border);
-            color: var(--text-dark); width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #f8fafc; width: 36px; height: 36px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center; cursor: pointer;
             transition: 0.3s; font-size: 1rem;
         }
@@ -183,7 +185,8 @@
         .nav-option-card {
             display: flex; align-items: center; gap: 16px;
             padding: 16px; border-radius: 16px; text-decoration: none;
-            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
         .nav-option-card:hover {
@@ -196,7 +199,7 @@
         }
         .nav-option-icon {
             width: 48px; height: 48px; border-radius: 12px;
-            background: var(--light-blue); color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.2); color: #60a5fa;
             display: flex; justify-content: center; align-items: center;
             font-size: 1.2rem; flex-shrink: 0; transition: 0.3s;
         }
@@ -205,10 +208,10 @@
             color: #ffffff;
         }
         .nav-option-text h4 {
-            font-size: 1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 3px;
+            font-size: 1rem; font-weight: 800; color: #f8fafc; margin-bottom: 3px;
         }
         .nav-option-text p {
-            font-size: 0.8rem; font-weight: 600; color: var(--text-gray); line-height: 1.3;
+            font-size: 0.8rem; font-weight: 600; color: #94a3b8; line-height: 1.3;
         }
 
         /* DARK MODE TOGGLE */
@@ -419,7 +422,6 @@
             <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="logo-img"> IX A CLASS
         </a>
         <div class="nav-actions">
-            <!-- TOMBOL KEMBALI MEMBUKA MODAL PILIH HALAMAN TUJUAN -->
             <button class="back-btn" onclick="openNavModal()">
                 <i class="fa-solid fa-arrow-left"></i> Kembali
             </button>
@@ -435,7 +437,7 @@
         </div>
     </header>
 
-    <!-- MODAL PILIH HALAMAN TUJUAN (SESUAI FOTO) -->
+    <!-- MODAL PILIH HALAMAN TUJUAN (WARNA HITAM) -->
     <div id="nav-modal" class="nav-modal" onclick="handleNavModalClick(event)">
         <div class="nav-modal-content">
             <div class="nav-modal-header">
@@ -478,7 +480,7 @@
         </div>
     </main>
 
-    <!-- LIGHTBOX MODAL (ZOOM-IN & ANIMASI SMOOTH) -->
+    <!-- LIGHTBOX MODAL (ZOOM-IN) -->
     <div id="lightbox-modal" class="lightbox-modal" onclick="handleLightboxClick(event)">
         <button class="lightbox-btn lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
         <button class="lightbox-btn lightbox-prev" onclick="changeLightboxImage(-1)"><i class="fa-solid fa-chevron-left"></i></button>
@@ -500,7 +502,7 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        // --- DATA GAMBAR CHAMPION (DARI CATBOX) ---
+        // --- DATA GAMBAR CHAMPION ---
         const listChampion = [
             { url: "https://files.catbox.moe/4dg4xw.jpg", title: "Selena - Story Telling Inggris (1st)" },
             { url: "https://files.catbox.moe/qis45t.jpg", title: "Selena - Story Telling Inggris (1st)" },
@@ -516,12 +518,10 @@
         const loaderQuote = document.getElementById('loader-quote');
         const pageLoader = document.getElementById('page-loader');
 
-        // Setup Loading Screen Quote & Progress Counter
         loaderQuote.innerHTML = '"MENUNGGU FOTO DARI SERVER CATBOX SELESAI DIMUAT..."<br><span id="load-progress" style="display: block; margin-top: 8px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700;">Memuat foto (0/' + listChampion.length + ')...</span>';
 
         let loadedImagesCount = 0;
 
-        // Render Kartu Galeri
         listChampion.forEach((item, index) => {
             const posStyle = item.pos ? `style="object-position: ${item.pos};"` : '';
             container.innerHTML += `
@@ -538,7 +538,6 @@
             `;
         });
 
-        // Fungsi Penghitung Loading Foto Catbox Asli
         function imageLoaded(index) {
             const cardLoader = document.getElementById(`loader-${index}`);
             if (cardLoader && !cardLoader.classList.contains('loaded')) {
@@ -548,7 +547,6 @@
                 if (progressEl) {
                     progressEl.textContent = `Memuat foto (${loadedImagesCount}/${listChampion.length})...`;
                 }
-                // Jika semua foto selesai dimuat dari catbox, sembunyikan loading screen
                 if (loadedImagesCount >= listChampion.length) {
                     setTimeout(() => {
                         pageLoader.classList.add('hide');
@@ -557,14 +555,13 @@
             }
         }
 
-        // Safety fallback timeout (jika koneksi lambat/bermasalah)
         setTimeout(() => {
             if (!pageLoader.classList.contains('hide')) {
                 pageLoader.classList.add('hide');
             }
         }, 8000);
 
-        // --- MODAL PILIH HALAMAN TUJUAN (NAVIGASI) ---
+        // --- MODAL PILIH HALAMAN TUJUAN ---
         const navModal = document.getElementById('nav-modal');
 
         function openNavModal() {
@@ -583,7 +580,7 @@
             }
         }
 
-        // --- LIGHTBOX / ZOOM LOGIC DENGAN ANIMASI SMOOTH ---
+        // --- LIGHTBOX / ZOOM LOGIC ---
         let currentIndex = 0;
         const modal = document.getElementById('lightbox-modal');
         const modalImg = document.getElementById('lightbox-img');
@@ -617,7 +614,6 @@
         function updateLightboxContent(isTransitioning = true) {
             const currentItem = listChampion[currentIndex];
             if (isTransitioning) {
-                // Animasi halus saat berpindah foto di dalam lightbox
                 modalImg.style.opacity = '0';
                 modalImg.style.transform = 'scale(0.9)';
                 modalCaption.style.opacity = '0';
@@ -637,7 +633,6 @@
             }
         }
 
-        // Navigasi Keyboard (Escape, panah kiri/kanan)
         document.addEventListener('keydown', (e) => {
             if (navModal.classList.contains('active') && e.key === 'Escape') closeNavModal();
             if (!modal.classList.contains('active')) return;
