@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Halaman Tidak Ditemukan | IX A CLASS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e3a8a;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --bg-body: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: blur(25px) saturate(200%);
+            --shadow-color: rgba(37, 99, 235, 0.1);
+            --footer-bg: rgba(15, 23, 42, 0.9);
+            --orb-1: #3b82f6;
+            --orb-2: #8b5cf6;
+        }
+
+        [data-theme="dark"] {
+            --primary-blue: #3b82f6;
+            --dark-blue: #93c5fd; 
+            --light-blue: #1e293b;
+            --white: #0f172a; 
+            --text-dark: #f8fafc;
+            --text-gray: #94a3b8;
+            --bg-body: #020617; 
+            --glass-bg: rgba(15, 23, 42, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(25px) saturate(150%);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --footer-bg: rgba(2, 6, 23, 0.9);
+            --orb-1: #1d4ed8;
+            --orb-2: #4c1d95;
+        }
+
+        html, body, header, footer {
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* --- BACKGROUND GLOWING ORBS --- */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--orb-1); }
+        .orb-2 { bottom: 10%; right: -10%; width: 40vw; height: 40vw; background: var(--orb-2); }
+
+        .glass-element {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--shadow-color);
+            transition: all 0.4s ease;
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            width: 100%; height: 70px; display: flex;
+            justify-content: space-between; align-items: center; padding: 0 5%;
+            position: fixed; top: 0; left: 0; z-index: 1000;
+            border-radius: 0; border-top: none; border-left: none; border-right: none;
+        }
+        .logo { font-weight: 800; font-size: 1.15rem; color: var(--dark-blue); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid var(--primary-blue); }
+
+        .theme-switch { display: inline-block; height: 28px; position: relative; width: 54px; }
+        .theme-switch input { display:none; }
+        .slider-toggle {
+            background-color: #cbd5e1; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;
+        }
+        .slider-toggle i { font-size: 11px; color: white; z-index: 1; }
+        .slider-toggle:before { background-color: white; bottom: 4px; content: ""; height: 20px; left: 4px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider-toggle { background-color: var(--primary-blue); }
+        input:checked + .slider-toggle:before { transform: translateX(26px); }
+
+        /* --- 404 CONTENT CONTAINER --- */
+        .error-container {
+            max-width: 750px;
+            margin: 130px auto 60px;
+            padding: 40px 30px;
+            border-radius: 28px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 90%;
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--orb-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .error-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+        }
+
+        .error-desc {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            max-width: 500px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* --- OPTIONS GRID --- */
+        .nav-grid-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-option-card {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px 20px; border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            text-decoration: none; color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .nav-option-card:hover {
+            background: var(--primary-blue);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .nav-option-card:hover .nav-option-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .nav-option-card:hover .nav-option-info p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-option-icon {
+            width: 46px; height: 46px; border-radius: 12px;
+            background: var(--light-blue);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; color: var(--primary-blue); flex-shrink: 0;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+        }
+
+        .nav-option-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+        .nav-option-info p { font-size: 0.78rem; color: var(--text-gray); font-weight: 500; transition: 0.3s; }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: var(--footer-bg); backdrop-filter: blur(20px); 
+            color: #ffffff; padding: 25px 5%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); 
+        }
+        .footer-left { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.1rem; }
+        .footer-left img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+        .footer-right a { display: flex; justify-content: center; align-items: center; width: 38px; height: 38px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; text-decoration: none; transition: background 0.3s; }
+        .footer-right a:hover { background: var(--primary-blue); }
+
+        @media (max-width: 650px) {
+            .nav-grid-options { grid-template-columns: 1fr; }
+            .error-code { font-size: 5rem; }
+            .error-container { margin-top: 100px; padding: 25px 20px; }
+            footer { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GLOWING ORBS BACKGROUND -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <!-- NAVBAR -->
+    <header class="glass-element">
+        <a href="index.html" class="logo">
+            <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="logo-img"> IX A CLASS
+        </a>
+        <div class="nav-actions">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider-toggle">
+                        <i class="fa-solid fa-sun"></i>
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- 404 KONTEN UTAMA -->
+    <div class="error-container glass-element">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Oops! Halaman Tidak Ditemukan</h1>
+        <p class="error-desc">Halaman yang Anda tuju mungkin salah alamat atau sudah dipindahkan. Silakan pilih menu di bawah ini untuk melanjutkan navigasi:</p>
+
+        <div class="nav-grid-options">
+            <a href="index.html" class="nav-option-card">
+                <div class="nav-option-icon"><i class="fa-solid fa-house"></i></div>
+                <div class="nav-option-info">
+                    <h4>Home</h4>
+                    <p>Kembali ke beranda utama kelas</p>
+                </div>
+            </a>
+            <a href="foto.html" class="nav-option-card">
+                <div class="nav-option-icon"><i class="fa-solid fa-image"></i></div>
+                <div class="nav-option-info">
+                    <h4>Foto</h4>
+                    <p>Lihat koleksi galeri dokumentasi</p>
+                </div>
+            </a>
+            <a href="video.html" class="nav-option-card">
+                <div class="nav-option-icon"><i class="fa-solid fa-video"></i></div>
+                <div class="nav-option-info">
+                    <h4>Video</h4>
+                    <p>Tonton arsip video keseruan kelas</p>
+                </div>
+            </a>
+            <a href="champion.html" class="nav-option-card">
+                <div class="nav-option-icon"><i class="fa-solid fa-trophy"></i></div>
+                <div class="nav-option-info">
+                    <h4>Champion</h4>
+                    <p>Cek daftar prestasi dan kejuaraan</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left"><img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo"> IX A</div>
+        <div class="footer-center">&copy; 2026 IX A. Edited By Sam.</div>
+        <div class="footer-right"><a href="https://www.instagram.com/9a.admirable" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
+    </footer>
+
+    <!-- JAVASCRIPT DARK MODE LOGIC -->
+    <script>
+        const toggleSwitch = document.getElementById('checkbox');
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') toggleSwitch.checked = true;
+        }
+        toggleSwitch.addEventListener('change', (e) => {
+            let mode = e.target.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+        });
+    </script>
+</body>
+</html>
