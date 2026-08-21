@@ -1,58 +1,24 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- OPENING SCREEN -->
-    <script>
-        // Opening hanya ditampilkan sekali setiap sesi browser.
-        if (sessionStorage.getItem("openingShown") !== "true") {
-            window.location.replace("opening.html");
-        }
-    </script>
-    <title>IX A CLASS - AMAZING CLASS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>THE JOURNEY TO IX A - Ultra Liquid Glass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- VARIABEL TEMA SUPER GLASS --- */
         :root {
             --primary-blue: #2563eb;
-            --dark-blue: #1e3a8a;
-            --light-blue: #eff6ff;
-            --white: #ffffff;
-            --text-dark: #1f2937;
-            --text-gray: #6b7280;
-            --bg-body: #f8fafc;
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-blur: blur(25px) saturate(200%);
-            --shadow-color: rgba(37, 99, 235, 0.1);
-            --footer-bg: rgba(15, 23, 42, 0.9);
-            --orb-1: #3b82f6;
-            --orb-2: #8b5cf6;
-        }
-
-        [data-theme="dark"] {
-            --primary-blue: #3b82f6;
-            --dark-blue: #93c5fd; 
-            --light-blue: #1e293b;
-            --white: #0f172a; 
-            --text-dark: #f8fafc;
-            --text-gray: #94a3b8;
-            --bg-body: #020617; 
-            --glass-bg: rgba(15, 23, 42, 0.3);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(25px) saturate(150%);
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --footer-bg: rgba(2, 6, 23, 0.9);
-            --orb-1: #1d4ed8;
-            --orb-2: #4c1d95;
-        }
-
-        html, body, header, .mobile-menu, footer, #page-loader {
-            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+            --accent-blue: #3b82f6;
+            --soft-blue: #eff6ff;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-glass: rgba(255, 255, 255, 0.7);
+            --sticky-yellow: rgba(254, 240, 138, 0.75);
+            --sticky-pink: rgba(251, 207, 232, 0.75);
+            --sticky-green: rgba(187, 247, 208, 0.75);
         }
 
         * {
@@ -60,717 +26,929 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            user-select: none;
         }
 
-        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
-
-        body {
-            background-color: var(--bg-body);
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-light);
             color: var(--text-dark);
-            overflow-x: hidden;
+        }
+
+        /* WADAH SCROLL FULLPAGE SNAP */
+        .scroll-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 40%),
+                linear-gradient(to right, rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+
+        /* EFEK ULTRA LIQUID GLASS */
+        .super-liquid-glass {
             position: relative;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(239, 246, 255, 0.25) 100%);
+            backdrop-filter: blur(35px) saturate(220%);
+            -webkit-backdrop-filter: blur(35px) saturate(220%);
+            border: 1px solid var(--border-glass);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 25px 50px -12px rgba(37, 99, 235, 0.12),
+                inset 0 2px 4px 0 rgba(255, 255, 255, 0.95),
+                inset 0 -6px 16px rgba(37, 99, 235, 0.05);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
         }
 
-        /* --- BACKGROUND GLOWING ORBS --- */
-        .bg-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            z-index: -1;
-            opacity: 0.4;
-            transition: background 0.5s ease;
-            pointer-events: none;
-        }
-        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--orb-1); }
-        .orb-2 { bottom: 10%; right: -10%; width: 40vw; height: 40vw; background: var(--orb-2); }
-
-        ::-webkit-scrollbar { width: 8px; height: 8px;}
-        ::-webkit-scrollbar-track { background: var(--bg-body); }
-        ::-webkit-scrollbar-thumb { background: var(--primary-blue); border-radius: 10px; }
-
-        /* --- SUPER GLASS CLASS UTILITY --- */
-        .glass-element {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px var(--shadow-color);
-            transition: all 0.4s ease;
-        }
-        .glass-element:hover { box-shadow: 0 12px 40px var(--shadow-color); }
-
-        /* --- LOADING SCREEN --- */
-        #page-loader {
-            position: fixed; inset: 0; z-index: 99999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; gap: 22px; background: var(--bg-body);
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        #page-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loader-spinner {
-            width: 58px; height: 58px; border: 5px solid var(--glass-bg);
-            border-top-color: var(--primary-blue); border-radius: 50%;
-            animation: loaderSpin 0.8s linear infinite;
-        }
-        @keyframes loaderSpin { to { transform: rotate(360deg); } }
-        .loader-title { color: var(--dark-blue); font-size: 1.25rem; font-weight: 800; }
-        .loader-quote { width: min(85%, 420px); min-height: 48px; color: var(--text-gray); font-size: 0.9rem; text-align: center; font-weight: 600; }
-
-        /* --- NAVBAR SUPER GLASS --- */
-        header {
-            position: fixed; top: 0; width: 100%; height: 70px; display: flex;
-            justify-content: space-between; align-items: center; padding: 0 5%; z-index: 1000;
-        }
-        .logo { font-weight: 800; font-size: 1.15rem; color: var(--dark-blue); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .logo-img { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid var(--primary-blue); }
-        .nav-actions { display: flex; align-items: center; gap: 15px; }
-
-        /* DARK MODE TOGGLE */
-        .theme-switch { display: inline-block; height: 28px; position: relative; width: 54px; }
-        .theme-switch input { display:none; }
-        .slider {
-            background-color: #cbd5e1; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;
-        }
-        .slider i { font-size: 11px; color: white; z-index: 1; }
-        .slider:before { background-color: white; bottom: 4px; content: ""; height: 20px; left: 4px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: var(--primary-blue); }
-        input:checked + .slider:before { transform: translateX(26px); }
-
-        /* HAMBURGER */
-        .hamburger { display: flex; flex-direction: column; justify-content: space-between; width: 28px; height: 18px; cursor: pointer; z-index: 1001; }
-        .hamburger .bar { width: 100%; height: 2.5px; background-color: var(--dark-blue); border-radius: 5px; transition: all 0.4s; }
-        .hamburger.active .bar:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
-        .hamburger.active .bar:nth-child(2) { opacity: 0; }
-        .hamburger.active .bar:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
-
-        /* MOBILE MENU OVERLAY */
-        .mobile-menu {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 999; opacity: 0; pointer-events: none; transition: all 0.4s ease; transform: translateY(-20px);
-        }
-        .mobile-menu.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .mobile-menu a { text-decoration: none; color: var(--text-dark); font-size: 1.3rem; font-weight: 600; margin: 15px 0; }
-        .mobile-menu a:hover { color: var(--primary-blue); }
-
-        /* --- SECTION BERANDA --- */
-        #beranda { margin-top: 100px; padding: 20px 5%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 25px; }
-        .hero-title { color: var(--text-dark); font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
-        .hero-animated-text { color: var(--primary-blue); font-size: 2.5rem; font-weight: 800; min-height: 60px; }
-        .fade-text { display: inline-block; transition: opacity 0.5s ease-in-out; opacity: 1; }
-        .fade-text.hidden { opacity: 0; }
-        .hero-desc { color: var(--text-gray); max-width: 600px; font-size: 1rem; line-height: 1.6; font-weight: 600; margin-bottom: 10px; }
-        .hero-buttons { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 400px; }
-        .btn-primary, .btn-secondary {
-            width: 100%; padding: 15px; border-radius: 30px; text-decoration: none; font-weight: 600;
-            display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.3s;
-        }
-        .btn-primary { background-color: var(--primary-blue); color: #ffffff; box-shadow: 0 4px 15px var(--shadow-color); }
-        .btn-secondary { background-color: transparent; color: var(--primary-blue); border: 2px solid var(--primary-blue); }
-        .btn-primary:hover, .btn-secondary:hover { transform: translateY(-3px); }
-        
-        .hero-img-container { width: 100%; max-width: 800px; margin-top: 20px; border-radius: 20px; overflow: hidden; }
-        .hero-img-container img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-
-        .bounce-hide { opacity: 0; transform: translateY(40px); }
-        .bounce-show { animation: bounceIn 0.8s cubic-bezier(0.28, 0.84, 0.42, 1) forwards; }
-        @keyframes bounceIn {
-            0% { opacity: 0; transform: translateY(50px); }
-            50% { opacity: 1; transform: translateY(-10px); }
-            75% { transform: translateY(5px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        section:not(#beranda):not(#galeri) { padding: 60px 5%; max-width: 1200px; margin: auto; }
-        .section-title { text-align: center; color: var(--dark-blue); font-size: 2rem; margin-bottom: 40px; font-weight: 800; }
-
-        /* --- CARDS KELAS --- */
-        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .about-card { padding: 30px 20px; border-radius: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; border-top: 4px solid var(--primary-blue) !important; }
-        .about-icon { font-size: 3rem; color: var(--primary-blue); margin-bottom: 15px; }
-        .about-card h3 { color: var(--text-dark); margin-bottom: 10px; font-weight: 800; }
-        .about-card p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.6; }
-
-        /* --- STRUKTUR KELAS --- */
-        .scroll-wrapper { display: flex; overflow-x: auto; gap: 25px; padding: 20px 10px 40px; scroll-snap-type: x mandatory; }
-        .anggota-card { min-width: 250px; border-radius: 15px; position: relative; scroll-snap-align: start; overflow: hidden; display: flex; flex-direction: column; }
-        .absen-badge { position: absolute; top: 15px; right: 15px; background: rgba(30,58,138,0.85); backdrop-filter: blur(5px); color: #fff; padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; z-index: 5; }
-        .foto-profil { width: 100%; aspect-ratio: 4/5; background-color: rgba(0,0,0,0.1); background-size: cover; background-position: center; }
-        .info-anggota { padding: 20px; text-align: center; flex-grow: 1; border-top: 1px solid var(--glass-border); }
-        .info-anggota h4 { font-size: 1.2rem; color: var(--text-dark); margin-bottom: 5px; font-weight: 800;}
-        .info-anggota p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 10px; font-weight: 600; text-transform: capitalize;}
-        .info-anggota a { color: var(--primary-blue); text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;}
-        .info-anggota a:hover { text-decoration: underline; }
-
-        /* --- KARTU JADWAL HARIAN (SWIPE) --- */
-        .jadwal-scroll { 
-            display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px; 
-            scroll-snap-type: x mandatory; 
-        }
-        .hari-card { 
-            min-width: 260px; flex-shrink: 0; scroll-snap-align: start; 
-            border-radius: 15px; overflow: hidden; border-top: 4px solid var(--primary-blue);
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-        .hari-header { 
-            background: var(--primary-blue); color: #ffffff; text-align: center; 
-            padding: 12px; font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; text-transform: uppercase;
-        }
-        .hari-body { padding: 15px; }
-        .mapel-item { 
-            display: flex; align-items: center; padding: 10px 0; 
-            border-bottom: 1px dashed var(--glass-border); color: var(--text-dark); 
-            font-size: 0.95rem; font-weight: 600; 
-        }
-        .mapel-item:last-child { border-bottom: none; }
-        .jam-badge { 
-            background: var(--dark-blue); color: #ffffff; width: 28px; height: 28px; 
-            display: flex; justify-content: center; align-items: center; 
-            border-radius: 50%; font-size: 0.8rem; margin-right: 12px; flex-shrink: 0; font-weight: 800;
-        }
-
-        /* Logika Transisi Tab */
-        .tab-pane {
+        .super-liquid-glass::before {
+            content: '';
             position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 60%);
+            pointer-events: none;
+            animation: liquidShimmer 8s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes liquidShimmer {
+            0%, 100% { transform: translate(-2%, -2%) rotate(0deg); }
+            50% { transform: translate(2%, 2%) rotate(8deg); }
+        }
+
+        /* SCROLL PROGRESS BAR */
+        .ruler-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(15px);
-            transition: all 0.4s ease-in-out;
-        }
-        .tab-pane.active {
-            position: relative;
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        .tab-content-container { position: relative; }
-
-        /* --- STATISTIK --- */
-        .stat-icon-title { text-align: center; font-size: 2.5rem; color: var(--primary-blue); margin-bottom: -10px; }
-        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; margin-top: 20px; }
-        .stat-card { padding: 30px; border-radius: 15px; border-bottom: 4px solid var(--primary-blue) !important; }
-        .stat-card h2 { font-size: 2.5rem; color: var(--text-dark); }
-        .stat-card p { color: var(--text-gray); font-weight: 600; margin-top: 5px;}
-
-        footer { background: var(--footer-bg); backdrop-filter: blur(20px); color: #ffffff; padding: 30px 5%; margin-top: 50px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .footer-left { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
-        .footer-left img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
-        .footer-right a { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; text-decoration: none; transition: background 0.3s; }
-        .footer-right a:hover { background: var(--primary-blue); }
-
-        /* --- EFEK ZOOM MENU TAB --- */
-        .tab-btn {
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
-            transform: scale(1);
-            cursor: pointer;
-        }
-        .tab-btn.active {
-            color: var(--primary-blue) !important;
-            transform: scale(1.2) !important;
-            text-shadow: 0 4px 15px var(--shadow-color);
+            height: 16px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            z-index: 200;
         }
 
-        /* --- KOTAK PIKET (1 HARI) & TOMBOL ARAH SUPER NGEGLASS --- */
-        .piket-wrapper {
-            display: flex; justify-content: center; align-items: center; gap: 15px; 
-            padding: 10px 0 30px; width: 100%; position: relative;
-        }
-        .piket-nav-btn {
-            background: rgba(255, 255, 255, 0.25);
-            color: var(--primary-blue);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(25px) saturate(200%);
-            -webkit-backdrop-filter: blur(25px) saturate(200%);
-            width: 50px; height: 50px; border-radius: 50%; display: flex; 
-            justify-content: center; align-items: center; font-size: 1.4rem; 
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); flex-shrink: 0;
-            z-index: 10;
-        }
-        .piket-nav-btn:hover { 
-            background: rgba(255, 255, 255, 0.4); 
-            transform: scale(1.15) translateY(-2px);
-            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.3), inset 0 2px 15px rgba(255, 255, 255, 0.9);
-        }
-        .piket-card-container { flex-grow: 1; max-width: 350px; overflow: hidden; perspective: 1200px; }
-        .piket-card {
-            text-align: center; padding: 30px 20px; border-radius: 15px;
-            border-top: 4px solid var(--primary-blue) !important;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
-            opacity: 1; transform: translateX(0) scale(1) rotateY(0deg);
-            filter: blur(0px);
-        }
-        .piket-card.fade-out-left { 
-            opacity: 0; 
-            transform: translateX(-100px) scale(0.8) rotateY(-25deg); 
-            filter: blur(6px);
-        }
-        .piket-card.fade-out-right { 
-            opacity: 0; 
-            transform: translateX(100px) scale(0.8) rotateY(25deg);
-            filter: blur(6px);
-        }
-        .piket-hari { font-size: 1.6rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
-        .piket-nama { display: flex; flex-direction: column; gap: 10px; font-weight: 600; font-size: 1.05rem; }
-        .piket-nama span { 
-            background: var(--bg-body); padding: 10px 15px; border-radius: 10px; 
-            border: 1px solid var(--glass-border); color: var(--text-dark); 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-            transition: transform 0.3s ease;
-        }
-        .piket-nama span:hover { transform: scale(1.05); border-color: var(--primary-blue); }
-
-        /* --- STYLING KARTU GALERI FULL COVER --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .gallery-card {
-            text-decoration: none;
-            overflow: hidden;
-            border-radius: 15px;
-            position: relative;
-            display: block;
-            height: 220px;
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: transform 0.3s ease;
-        }
-        .gallery-card:hover {
-            transform: translateY(-5px);
-        }
-        .gallery-card img {
-            width: 100%;
+        .ruler-bar {
             height: 100%;
-            object-fit: cover;
-            display: block;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--primary-blue));
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.8);
+            transition: width 0.1s ease-out;
         }
-        .gallery-overlay {
+
+        /* PESAWAT KERTAS */
+        .scroll-plane {
+            position: fixed;
+            top: 10%;
+            left: -60px;
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            z-index: 90;
+            pointer-events: none;
+            filter: drop-shadow(0 8px 12px rgba(37, 99, 235, 0.25));
+            will-change: transform;
+            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* PARALLAX LAYER */
+        .parallax-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .p-obj {
+            position: absolute;
+            font-size: 2.2rem;
+            color: rgba(37, 99, 235, 0.25);
+            will-change: transform;
+            transition: transform 0.2s ease-out;
+        }
+
+        .math-sym {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: rgba(37, 99, 235, 0.3);
+            white-space: nowrap;
+        }
+
+        .glass-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(59, 130, 246, 0.15));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.9), 0 15px 30px rgba(37, 99, 235, 0.1);
+            will-change: transform;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* STICKY NOTES */
+        .sticky-note {
+            position: absolute;
+            padding: 12px 20px;
+            border-radius: 18px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e293b;
+            z-index: 15;
+            pointer-events: none;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+        }
+
+        #sn-left { top: 12%; left: 6%; background: var(--sticky-yellow); transform: rotate(-6deg); }
+        #sn-top-right { top: 15%; right: 6%; background: var(--sticky-green); transform: rotate(-4deg); }
+        #sn-right { bottom: 18%; right: 8%; background: var(--sticky-pink); transform: rotate(7deg); }
+
+        /* TOMBOL SKIP INTRO */
+        .skip-btn {
+            position: fixed;
+            top: 28px;
+            right: 25px;
+            z-index: 100;
+            color: var(--primary-blue);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .skip-btn:hover {
+            background: var(--primary-blue);
+            color: #ffffff;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .scroll-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            z-index: 50;
+            pointer-events: none;
+            animation: pulseScroll 2.5s infinite ease-in-out;
+            text-align: center;
+        }
+        @keyframes pulseScroll {
+            0%, 100% { transform: translate(-50%, 0); opacity: 0.3; }
+            50% { transform: translate(-50%, 10px); opacity: 0.9; }
+        }
+
+        /* SCENE SECTIONS */
+        .scene-section {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px 20px;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* SCENE 1 */
+        .s1-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-blue);
+            padding: 10px 26px;
+            border-radius: 25px;
+            font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 2;
+        }
+        .s1-year-box {
+            display: flex;
+            font-size: clamp(5.5rem, 17vw, 12rem);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--text-dark);
+            position: relative;
+            z-index: 2;
+        }
+        .s1-part-left, .s1-part-right {
+            display: inline-block;
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .active .s1-badge { opacity: 1; transform: translateY(0); }
+        .active .s1-part-left { transform: translateX(-20px) rotate(-4deg); color: var(--primary-blue); }
+        .active .s1-part-right { transform: translateX(20px) rotate(4deg); }
+
+        /* SCENE 2 */
+        .s2-card {
+            padding: 45px 65px;
+            border-radius: 36px;
+            opacity: 0;
+            transform: scale(0.88) translateY(35px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 2;
+        }
+        .s2-chapter { font-size: clamp(0.9rem, 2vw, 1.2rem); letter-spacing: 5px; color: var(--primary-blue); font-weight: 800; margin-bottom: 15px; position: relative; z-index: 2;}
+        .s2-slider { display: flex; align-items: center; gap: 25px; font-size: clamp(3.2rem, 9.5vw, 7.5rem); font-weight: 900; white-space: nowrap; position: relative; z-index: 2;}
+        .s2-class { font-size: clamp(2.2rem, 7vw, 5rem); font-weight: 900; color: var(--text-dark); margin-top: 15px; letter-spacing: 3px; position: relative; z-index: 2;}
+
+        .active .s2-card { opacity: 1; transform: scale(1) translateY(0); }
+
+        /* SCENE 3 */
+        .s3-bg-text {
+            position: absolute;
+            font-size: clamp(10rem, 32vw, 24rem);
+            font-weight: 900;
+            color: rgba(37, 99, 235, 0.04);
+            letter-spacing: 10px;
+            z-index: 1;
+            transform: scale(0.7);
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .s3-logo-wrapper { position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; }
+        .s3-logo {
+            width: clamp(140px, 22vw, 240px);
+            height: clamp(140px, 22vw, 240px);
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 60px rgba(37, 99, 235, 0.25);
+            transform: scale(0.2) rotate(-25deg);
+            opacity: 0;
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .s3-ring {
+            position: absolute;
+            width: clamp(180px, 28vw, 300px);
+            height: clamp(180px, 28vw, 300px);
+            border: 2px dashed var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0;
+            animation: spinRing 22s linear infinite;
+            transition: opacity 1.2s ease;
+        }
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+
+        .active .s3-bg-text { transform: scale(1.05); }
+        .active .s3-logo { transform: scale(1) rotate(0deg); opacity: 1; }
+        .active .s3-ring { opacity: 0.6; }
+
+        /* SCENE 4 */
+        .s4-num {
+            font-size: clamp(9rem, 30vw, 22rem);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(180deg, var(--text-dark) 20%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.9s ease;
+        }
+        .s4-dot {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-blue);
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .s4-text-box {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.9s ease 0.4s;
+            padding: 24px 48px;
+            border-radius: 28px;
+            z-index: 2;
+        }
+        .s4-title { font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: 4px; color: var(--text-dark); position: relative; z-index: 2;}
+        .s4-sub { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 800; letter-spacing: 5px; color: var(--primary-blue); position: relative; z-index: 2;}
+
+        .active .s4-num { opacity: 0; transform: scale(1.3); filter: blur(10px); }
+        .active .s4-text-box { opacity: 1; transform: translateY(0); }
+
+        /* ================= SCENE HISTORY ROADMAP (FULL PHOTO FIT FIX) ================= */
+        .history-section-title {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .history-section-title i { color: var(--primary-blue); }
+        .active .history-section-title { opacity: 1; transform: translateY(0); }
+
+        .roadmap-container {
+            position: relative;
+            width: 100%;
+            max-width: 950px;
+            height: 72vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        /* SVG Garis Penghubung Berkelok */
+        .roadmap-svg {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4));
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            justify-content: space-between;
-        }
-        .gallery-cat {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .gallery-title {
-            color: #ffffff;
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-top: 2px;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-            .hero-title { font-size: 1.5rem; }
-            .hero-animated-text { font-size: 2rem; min-height: 50px; }
-            .stat-grid { grid-template-columns: 1fr; }
-            footer { flex-direction: column; text-align: center; }
+        .roadmap-path {
+            fill: none;
+            stroke: var(--primary-blue);
+            stroke-width: 4;
+            stroke-dasharray: 10, 10;
+            opacity: 0;
+            transition: opacity 1s ease;
+            animation: dashMove 25s linear infinite;
         }
+
+        .active .roadmap-path { opacity: 0.65; }
+
+        @keyframes dashMove {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        /* Node Item Roadmap */
+        .roadmap-node {
+            position: absolute;
+            z-index: 3;
+            width: clamp(230px, 28vw, 280px);
+            padding: 12px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.65) translateY(35px) rotate(-3deg);
+            transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+        }
+
+        .roadmap-node:hover {
+            transform: scale(1.06) translateY(-6px) rotate(0deg) !important;
+            box-shadow: 0 30px 60px -10px rgba(37, 99, 235, 0.25);
+            border-color: rgba(59, 130, 246, 0.8);
+        }
+
+        .roadmap-node img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            object-position: center;
+            background: rgba(15, 23, 42, 0.05);
+            border-radius: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.18);
+            transition: transform 0.5s ease;
+        }
+
+        .roadmap-node:hover img {
+            transform: scale(1.02);
+        }
+
+        .node-badge {
+            background: linear-gradient(135deg, var(--accent-blue), var(--primary-blue));
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 5px 14px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .node-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.35;
+            position: relative;
+            z-index: 2;
+        }
+
+        #node-1 { top: 2%; right: 8%; }
+        #node-2 { top: 35%; left: 6%; }
+        #node-3 { bottom: 2%; right: 12%; }
+
+        .active #node-1 { 
+            opacity: 1; 
+            transform: scale(1) translateY(0) rotate(0deg); 
+            transition-delay: 0.25s; 
+            animation: floatNode1 6s infinite ease-in-out 1.2s;
+        }
+        .active #node-2 { 
+            opacity: 1; 
+            transform: scale(1) translateY(0) rotate(0deg); 
+            transition-delay: 0.5s; 
+            animation: floatNode2 6s infinite ease-in-out 1.5s;
+        }
+        .active #node-3 { 
+            opacity: 1; 
+            transform: scale(1) translateY(0) rotate(0deg); 
+            transition-delay: 0.75s; 
+            animation: floatNode3 6s infinite ease-in-out 1.8s;
+        }
+
+        @keyframes floatNode1 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+        @keyframes floatNode2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+        }
+        @keyframes floatNode3 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-7px) rotate(1deg); }
+        }
+
+        /* ================= SUPPORT HP (MOBILE OPTIMIZED RATIO) ================= */
+        @media (max-width: 768px) {
+            .history-section-title {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+
+            .roadmap-container {
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                height: 82vh;
+                width: 100%;
+                padding: 5px 0;
+                position: relative;
+            }
+
+            .roadmap-svg { display: none; }
+
+            .roadmap-container::before {
+                content: '';
+                position: absolute;
+                top: 4%;
+                bottom: 4%;
+                left: 50%;
+                width: 0;
+                border-left: 3px dashed var(--primary-blue);
+                transform: translateX(-50%);
+                opacity: 0.4;
+                z-index: 1;
+            }
+
+            .roadmap-node {
+                position: relative !important;
+                inset: auto !important;
+                width: 90% !important;
+                max-width: 320px;
+                padding: 10px;
+                z-index: 2;
+                box-shadow: 0 10px 25px rgba(37, 99, 235, 0.12);
+            }
+
+            .roadmap-node img {
+                width: 100%;
+                height: auto;
+                max-height: 110px;
+                aspect-ratio: 16 / 9;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 12px;
+                background: rgba(15, 23, 42, 0.04);
+            }
+
+            #node-1 { transform: translateX(10px) scale(0.85); }
+            #node-2 { transform: translateX(-10px) scale(0.85); }
+            #node-3 { transform: translateX(10px) scale(0.85); }
+
+            .active #node-1 { transform: translateX(10px) scale(1) !important; animation: none; }
+            .active #node-2 { transform: translateX(-10px) scale(1) !important; animation: none; }
+            .active #node-3 { transform: translateX(10px) scale(1) !important; animation: none; }
+
+            .node-badge {
+                font-size: 0.65rem;
+                padding: 3px 10px;
+            }
+
+            .node-text {
+                font-size: 0.7rem;
+                line-height: 1.25;
+            }
+        }
+
+        /* SCENE 5 */
+        .s5-card {
+            position: absolute;
+            padding: 18px 32px;
+            border-radius: 24px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-dark);
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
+            white-space: nowrap;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 2;
+        }
+        .s5-card i { color: var(--primary-blue); position: relative; z-index: 2;}
+        .s5-card span { position: relative; z-index: 2; }
+
+        #f1 { top: 18%; left: 8%; transform: translateX(-80px) rotate(-6deg); }
+        #f2 { top: 22%; right: 10%; transform: translateX(80px) rotate(5deg); }
+        #f3 { bottom: 25%; left: 12%; transform: translateY(80px) rotate(-4deg); }
+        #f4 { bottom: 18%; right: 14%; transform: translateY(-80px) rotate(6deg); }
+        #f5 { top: 48%; left: 50%; transform: translate(-50%, -50%) scale(0.5); background: var(--primary-blue); color: #ffffff; border: none; }
+        #f5 i { color: #ffffff; }
+
+        .active #f1 { opacity: 1; transform: translateX(0) rotate(-4deg); }
+        .active #f2 { opacity: 1; transform: translateX(0) rotate(3deg); }
+        .active #f3 { opacity: 1; transform: translateY(0) rotate(-2deg); }
+        .active #f4 { opacity: 1; transform: translateY(0) rotate(4deg); }
+        .active #f5 { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+
+        /* SCENE 6 */
+        .s6-container {
+            padding: 55px 65px;
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 620px;
+            width: 90%;
+            position: relative;
+            z-index: 2;
+        }
+        .s6-title { font-size: clamp(3.5rem, 9vw, 6.5rem); font-weight: 900; color: var(--text-dark); letter-spacing: 4px; line-height: 1; opacity: 0; transform: translateY(-20px); transition: all 0.9s ease; position: relative; z-index: 2;}
+        .s6-sub { font-size: clamp(0.9rem, 2vw, 1.3rem); letter-spacing: 6px; color: var(--primary-blue); font-weight: 800; margin-top: 15px; opacity: 0; transition: all 0.9s ease 0.2s; position: relative; z-index: 2;}
+        .s6-logo { width: 95px; height: 95px; border-radius: 50%; border: 4px solid #ffffff; margin-top: 25px; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25); opacity: 0; transform: scale(0.5); transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s; position: relative; z-index: 2;}
+        .enter-btn {
+            margin-top: 30px;
+            background: var(--primary-blue);
+            color: #ffffff;
+            border: none;
+            padding: 18px 45px;
+            border-radius: 35px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.35);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.9s ease 0.6s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        .enter-btn:hover { background: #1d4ed8; transform: translateY(-3px) scale(1.05); }
+
+        .active .s6-title { opacity: 1; transform: translateY(0); }
+        .active .s6-sub { opacity: 1; }
+        .active .s6-logo { opacity: 1; transform: scale(1); }
+        .active .enter-btn { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <!-- GLOWING ORBS BACKGROUND -->
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
+    <div class="scroll-container" id="scrollContainer">
 
-    <div id="page-loader">
-        <div class="loader-spinner"></div>
-        <div class="loader-title">IX A CLASS</div>
-        <div id="loader-quote" class="loader-quote"></div>
-    </div>
-
-    <!-- NAVBAR -->
-    <header class="glass-element" style="border-radius: 0; border-top: none; border-left: none; border-right: none;">
-        <a href="#beranda" class="logo">
-            <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="logo-img"> IX A CLASS
-        </a>
-        <div class="nav-actions">
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
-                    <div class="slider">
-                        <i class="fa-solid fa-sun"></i>
-                        <i class="fa-solid fa-moon"></i>
-                    </div>
-                </label>
-            </div>
-            <div class="hamburger" id="hamburger-btn">
-                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-            </div>
-        </div>
-    </header>
-
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu glass-element" id="mobile-menu">
-        <a href="#beranda" class="menu-link">Beranda</a>
-        <a href="#tentang" class="menu-link">Tentang</a>
-        <a href="#anggota" class="menu-link">Anggota</a>
-        <a href="#jadwal" class="menu-link">Jadwal</a>
-        <a href="#galeri" class="menu-link">Galeri</a>
-        <a href="#statistik" class="menu-link">Statistik</a>
-    </div>
-
-    <!-- BERANDA -->
-    <section id="beranda" class="bounce-hide">
-        <h2 class="hero-title">Kami Adalah</h2>
-        <div class="hero-animated-text"><span id="text-slider" class="fade-text">ANAK BU ROIDA S.PD</span></div>
-        <p class="hero-desc">Wadah kreativitas, inovasi, dan persaudaraan para siswa IX A masa depan. Unggul dalam akademik, solid dalam kebersamaan.</p>
-        <div class="hero-buttons">
-            <a href="#tentang" class="btn-primary">Jelajahi Kelas &rarr;</a>
-        </div>
-        <div class="hero-img-container glass-element">
-            <img src="https://files.catbox.moe/wd7lxx.jpg" alt="Foto Logo Kelas IX A">
-        </div>
-    </section>
-
-    <!-- TENTANG -->
-    <section id="tentang">
-        <h2 class="section-title bounce-hide">TENTANG KELAS KAMI</h2>
-        <div class="about-grid">
-            <div class="about-card glass-element bounce-hide">
-                <div class="about-icon"><i class="fa-solid fa-rocket"></i></div>
-                <h3>Visi Kelas</h3>
-                <p>Menjadi kelas yang solid, berprestasi, dan mengedepankan kebersamaan dalam belajar.</p>
-            </div>
-            <div class="about-card glass-element bounce-hide">
-                <div class="about-icon"><i class="fa-solid fa-bullseye"></i></div>
-                <h3>Misi Kelas</h3>
-                <p>1. Menjaga kekompakan kelas.<br>2. Saling membantu.<br>3. Mengharumkan nama sekolah.</p>
-            </div>
-            <div class="about-card glass-element bounce-hide">
-                <div class="about-icon"><i class="fa-solid fa-glasses"></i></div>
-                <h3>Wali Kelas</h3>
-                <p><strong>Ibu Roida S.Pd</strong><br>Pembimbing kami yang sabar dan selalu mendukung potensi siswa.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ANGGOTA -->
-    <section id="anggota">
-        <h2 class="section-title bounce-hide">STRUKTUR KELAS</h2>
-        <div class="scroll-wrapper bounce-hide" id="container-anggota"></div>
-    </section>
-
-    <!-- JADWAL & PIKET -->
-    <section id="jadwal">
-        <div class="bounce-hide" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 35px;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: var(--primary-blue); letter-spacing: 3px; margin-bottom: 8px; text-transform: uppercase;">Jadwal</span>
-            
-            <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 25px; flex-wrap: nowrap; width: 100%;">
-                <h2 class="tab-btn active" id="btn-jadwal" onclick="switchTab('jadwal')" style="margin: 0; font-size: clamp(1.1rem, 4vw, 1.5rem); white-space: nowrap;">PELAJARAN</h2>
-                <span class="tab-divider" style="margin: 0; font-size: clamp(1.1rem, 4vw, 1.5rem); opacity: 0.5;">|</span>
-                <h2 class="tab-btn" id="btn-piket" onclick="switchTab('piket')" style="margin: 0; font-size: clamp(1.1rem, 4vw, 1.5rem); white-space: nowrap;">PIKET</h2>
-            </div>
+        <div class="ruler-container">
+            <div class="ruler-bar" id="rulerBar"></div>
         </div>
 
-        <div class="tab-content-container bounce-hide">
-            <!-- KONTEN: JADWAL PELAJARAN -->
-            <div id="content-jadwal" class="tab-pane active">
-                <div class="jadwal-scroll" id="scroll-jadwal"></div>
+        <i class="fa-solid fa-paper-plane scroll-plane" id="scrollPlane"></i>
+
+        <div class="parallax-layer">
+            <i class="fa-solid fa-book-open p-obj" style="top: 8%; left: 6%;" data-speed="0.4" data-rot="0.15"></i>
+            <i class="fa-solid fa-graduation-cap p-obj" style="top: 15%; right: 7%;" data-speed="-0.3" data-rot="-0.2"></i>
+            <i class="fa-solid fa-compass p-obj" style="top: 32%; right: 9%;" data-speed="-0.35" data-rot="0.25"></i>
+            <i class="fa-solid fa-calculator p-obj" style="top: 48%; left: 6%;" data-speed="0.45" data-rot="-0.18"></i>
+            <i class="fa-solid fa-atom p-obj" style="top: 68%; right: 8%;" data-speed="-0.4" data-rot="0.3"></i>
+            <i class="fa-solid fa-globe p-obj" style="top: 88%; left: 7%;" data-speed="0.3" data-rot="-0.2"></i>
+
+            <span class="p-obj math-sym" style="top: 18%; left: 78%;" data-speed="-0.2" data-rot="0.1">E = mc²</span>
+            <span class="p-obj math-sym" style="top: 38%; left: 8%;" data-speed="0.3" data-rot="-0.12">a² + b² = c²</span>
+            <span class="p-obj math-sym" style="top: 58%; right: 12%;" data-speed="-0.35" data-rot="0.15">π ≈ 3.14</span>
+            <span class="p-obj math-sym" style="top: 78%; left: 80%;" data-speed="0.25" data-rot="-0.1">F = m · a</span>
+
+            <div class="glass-orb p-obj" style="top: 12%; left: 82%; width: 70px; height: 70px;" data-speed="-0.5" data-rot="0.4"></div>
+            <div class="glass-orb p-obj" style="top: 28%; left: 5%; width: 90px; height: 90px;" data-speed="0.6" data-rot="-0.3"></div>
+            <div class="glass-orb p-obj" style="top: 52%; right: 5%; width: 110px; height: 110px;" data-speed="-0.45" data-rot="0.2"></div>
+            <div class="glass-orb p-obj" style="top: 75%; left: 8%; width: 65px; height: 65px;" data-speed="0.5" data-rot="-0.25"></div>
+        </div>
+
+        <button class="skip-btn super-liquid-glass" onclick="goToIndex()">
+            <span>Lewati Intro</span> <i class="fa-solid fa-forward"></i>
+        </button>
+
+        <!-- SCENE 1 -->
+        <section class="scene-section" id="scene-1">
+            <div class="sticky-note super-liquid-glass" id="sn-left">📌 SMP Budi Mulia</div>
+            <div class="sticky-note super-liquid-glass" id="sn-top-right">✨ Class of 2026/2027</div>
+            <div class="sticky-note super-liquid-glass" id="sn-right">✏️ IX A Memories</div>
+
+            <div class="s1-badge super-liquid-glass"><i class="fa-solid fa-school"></i> SMP BUDI MULIA</div>
+            <div class="s1-year-box">
+                <span class="s1-part-left">20</span>
+                <span class="s1-part-right">26</span>
+            </div>
+        </section>
+
+        <!-- SCENE 2 -->
+        <section class="scene-section" id="scene-2">
+            <div class="s2-card super-liquid-glass">
+                <div class="s2-chapter"><i class="fa-solid fa-bookmark"></i> A NEW CHAPTER BEGINS</div>
+                <div class="s2-slider">
+                    <span style="color: var(--text-muted);">2026</span>
+                    <i class="fa-solid fa-arrow-right-long" style="font-size: 0.5em; color: var(--primary-blue);"></i>
+                    <span style="color: var(--text-dark);">2027</span>
+                </div>
+                <div class="s2-class">CLASS IX</div>
+            </div>
+        </section>
+
+        <!-- SCENE 3 -->
+        <section class="scene-section" id="scene-3">
+            <div class="s3-bg-text">IX A</div>
+            <div class="s3-logo-wrapper">
+                <div class="s3-ring"></div>
+                <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="s3-logo">
+            </div>
+        </section>
+
+        <!-- SCENE 4 -->
+        <section class="scene-section" id="scene-4">
+            <div class="s4-num">26</div>
+            <div class="s4-text-box super-liquid-glass">
+                <div class="s4-title">26 STORIES</div>
+                <div class="s4-sub">ONE CLASS</div>
+            </div>
+        </section>
+
+        <!-- SCENE HISTORY -->
+        <section class="scene-section" id="scene-history">
+            <div class="history-section-title">
+                <i class="fa-solid fa-route"></i> OUR JOURNEY ROADMAP
             </div>
 
-            <!-- KONTEN: PIKET KOTAK 1 HARI & TOMBOL ARAH -->
-            <div id="content-piket" class="tab-pane">
-                <div class="piket-wrapper">
-                    <button class="piket-nav-btn" onclick="geserPiket(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-                    
-                    <div class="piket-card-container">
-                        <div id="piket-card-view" class="piket-card glass-element">
-                            <div id="piket-hari" class="piket-hari">SENIN</div>
-                            <div id="piket-nama" class="piket-nama">
-                                <span>Constan</span><span>Inke</span><span>Weidy</span><span>Kenny</span><span>Selena</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="piket-nav-btn" onclick="geserPiket(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="roadmap-container">
+                <svg class="roadmap-svg" viewBox="0 0 950 500" preserveAspectRatio="none">
+                    <path class="roadmap-path" d="M 720 70 C 500 70, 200 130, 200 240 C 200 360, 720 380, 720 440" />
+                </svg>
+
+                <div class="roadmap-node super-liquid-glass" id="node-1">
+                    <img src="https://files.catbox.moe/f1pgeb.jpg" alt="Memories Kelas 7">
+                    <span class="node-badge">2024 / 2025 • KELAS VII</span>
+                    <p class="node-text">Langkah awal mengukir cerita, saling mengenal dan beradaptasi di SMP Budi Mulia.</p>
+                </div>
+
+                <div class="roadmap-node super-liquid-glass" id="node-2">
+                    <img src="https://files.catbox.moe/xqzvuk.jpg" alt="Memories Kelas 8">
+                    <span class="node-badge">2025 / 2026 • KELAS VIII</span>
+                    <p class="node-text">Makin kompak dan solid, melewati rintangan serta mencetak berbagai prestasi bersama.</p>
+                </div>
+
+                <div class="roadmap-node super-liquid-glass" id="node-3">
+                    <img src="https://files.catbox.moe/c294mo.jpg" alt="Memories Kelas 9">
+                    <span class="node-badge">2026 / 2027 • KELAS IX A</span>
+                    <p class="node-text">Puncak kebersamaan angkatan penutup, bersiap melangkah menggapai impian masa depan!</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- GALERI / ARSIP FOLDER (FULL WIDTH LAYER) -->
-    <section id="galeri" style="background: rgba(2, 6, 23, 0.95); width: 100%; padding: 60px 5%; margin: 40px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        <div style="max-width: 1200px; margin: auto;">
-            <h2 class="section-title bounce-hide" style="color: #ffffff;">GALERI KELAS</h2>
-            <p style="text-align: center; color: #94a3b8; margin-top: -25px; margin-bottom: 30px; font-weight: 600;" class="bounce-hide">Pilih kategori arsip di bawah ini</p>
-            
-            <div class="bounce-hide gallery-grid">
-                
-                <!-- Foto -->
-                <a href="foto.html" class="gallery-card">
-                    <img id="img-foto" src="" alt="Foto">
-                    <div class="gallery-overlay">
-                        <div>
-                            <span class="gallery-cat" style="color: #93c5fd;">Kategori</span>
-                            <h3 class="gallery-title">Foto</h3>
-                        </div>
-                        <i class="fa-solid fa-images" style="font-size: 2rem; color: #3b82f6;"></i>
-                    </div>
-                </a>
+        <!-- SCENE 5 -->
+        <section class="scene-section" id="scene-5">
+            <div class="s5-card super-liquid-glass" id="f1"><i class="fa-regular fa-calendar-check"></i> <span>2026</span></div>
+            <div class="s5-card super-liquid-glass" id="f2"><i class="fa-solid fa-user-group"></i> <span>IX A</span></div>
+            <div class="s5-card super-liquid-glass" id="f3"><i class="fa-solid fa-building-columns"></i> <span>SCHOOL</span></div>
+            <div class="s5-card super-liquid-glass" id="f4"><i class="fa-solid fa-heart"></i> <span>FRIENDS</span></div>
+            <div class="s5-card" id="f5"><i class="fa-solid fa-photo-film"></i> <span>MEMORIES</span></div>
+        </section>
 
-                <!-- Video -->
-                <a href="video.html" class="gallery-card">
-                    <img id="img-video" src="" alt="Video">
-                    <div class="gallery-overlay">
-                        <div>
-                            <span class="gallery-cat" style="color: #c084fc;">Kategori</span>
-                            <h3 class="gallery-title">Video</h3>
-                        </div>
-                        <i class="fa-solid fa-video" style="font-size: 2rem; color: #a855f7;"></i>
-                    </div>
-                </a>
-
-                <!-- Champion -->
-                <a href="champion.html" class="gallery-card">
-                    <img id="img-champion" src="" alt="Champion">
-                    <div class="gallery-overlay">
-                        <div>
-                            <span class="gallery-cat" style="color: #fde047;">Kategori</span>
-                            <h3 class="gallery-title">Champion</h3>
-                        </div>
-                        <i class="fa-solid fa-trophy" style="font-size: 2rem; color: #eab308;"></i>
-                    </div>
-                </a>
-
+        <!-- SCENE 6 (BAGIAN PALING BAWAH) -->
+        <section class="scene-section" id="scene-6">
+            <div class="s6-container super-liquid-glass">
+                <div class="s6-title">IX A</div>
+                <div class="s6-sub">WELCOME TO OUR STORY</div>
+                <img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo IX A" class="s6-logo">
+                <button class="enter-btn" onclick="goToIndex()">
+                    <span>Masuk Website</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
             </div>
+        </section>
+
+        <div class="scroll-hint" id="scrollHint">
+            <span id="scrollHintText">SCROLL KE BAWAH</span>
+            <i class="fa-solid fa-chevron-down" id="scrollHintIcon"></i>
         </div>
-    </section>
 
-    <!-- STATISTIK -->
-    <section id="statistik" style="padding-bottom: 20px;">
-        <div class="stat-icon-title bounce-hide"><i class="fa-solid fa-chart-pie"></i></div>
-        <h2 class="section-title bounce-hide" style="margin-top: 10px;">STATISTIK</h2>
-        <div class="stat-grid">
-            <div class="stat-card glass-element bounce-hide"><h2>26</h2><p>Total Anggota</p></div>
-            <div class="stat-card glass-element bounce-hide"><h2>17</h2><p>Guru Pengajar</p></div>
-            <div class="stat-card glass-element bounce-hide"><h2>13</h2><p>Mata Pelajaran</p></div>
-        </div>
-    </section>
+    </div>
 
-    <footer id="kontak">
-        <div class="footer-left"><img src="https://files.catbox.moe/udpsm0.jpg" alt="Logo"> IX A</div>
-        <div class="footer-center">&copy; 2026 IX A. Edited By Sam.</div>
-        <div class="footer-right"><a href="https://www.instagram.com/9a.admirable" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
-    </footer>
-
-    <!-- JAVASCRIPT -->
     <script>
-        // --- RANDOM BACKGROUNDS UNTUK FOLDER GALERI ---
-        const listFotoGaleri = [
-            'https://files.catbox.moe/wd7lxx.jpg'
-        ];
-        
-        const listVideoBg = [
-            'https://files.catbox.moe/c294mo.jpg'
-        ];
+        let redirecting = false;
 
-        const listChampionBg = [
-            'https://files.catbox.moe/qvqjz2.jpg'
-        ];
-
-        document.getElementById('img-foto').src = listFotoGaleri[Math.floor(Math.random() * listFotoGaleri.length)];
-        document.getElementById('img-video').src = listVideoBg[Math.floor(Math.random() * listVideoBg.length)];
-        document.getElementById('img-champion').src = listChampionBg[Math.floor(Math.random() * listChampionBg.length)];
-
-        // --- DARK MODE ---
-        const toggleSwitch = document.getElementById('checkbox');
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme) {
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            if (currentTheme === 'dark') toggleSwitch.checked = true;
-        }
-        toggleSwitch.addEventListener('change', (e) => {
-            let mode = e.target.checked ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', mode);
-            localStorage.setItem('theme', mode);
-        });
-
-        // --- LOADING SCREEN ---
-        const quotesGenZ = ['Nggak harus ngebut, yang penting tetap jalan.', 'Fokus ke progress, bukan ke validasi orang.', 'Pelan-pelan asal konsisten.'];
-        document.getElementById('loader-quote').textContent = '“' + quotesGenZ[Math.floor(Math.random() * quotesGenZ.length)] + '”';
-        
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const loader = document.getElementById('page-loader');
-                loader.classList.add('hide');
-            }, 1500);
-        });
-
-        // --- HAMBURGER ---
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        hamburgerBtn.addEventListener('click', () => {
-            hamburgerBtn.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
-        document.querySelectorAll('.menu-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburgerBtn.classList.remove('active'); mobileMenu.classList.remove('active');
-            });
-        });
-
-        // --- ANIMASI TEKS HERO ---
-        const textSlider = document.getElementById('text-slider');
-        const listTeks = ["ANAK BU ROIDA S.PD", "IX A CLASS"];
-        let indeksTeks = 0;
-        setInterval(() => {
-            textSlider.classList.add('hidden');
-            setTimeout(() => {
-                indeksTeks = (indeksTeks + 1) % listTeks.length;
-                textSlider.textContent = listTeks[indeksTeks];
-                textSlider.classList.remove('hidden');
-            }, 500); 
-        }, 3000);
-
-        // --- ANIMASI SCROLL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('bounce-show'); });
-        }, { threshold: 0.15 }); 
-        document.querySelectorAll('.bounce-hide').forEach((el) => observer.observe(el));
-
-        // --- DATA ANGGOTA ---
-        const anggotaData = [
-            { absen: '-', nama: "Bu Roida S.Pd", peran: "Wali Kelas", foto: "https://files.catbox.moe/7aurrx.jpg", ig: null },
-            { absen: '17', nama: "Piter", peran: "Class Leader", foto: "https://files.catbox.moe/5t5mpe.jpg", ig: "@terrote11" },
-            { absen: '5', nama: "Evelyn", peran: "Vice leader", foto: "https://files.catbox.moe/tl8tgq.jpg", ig: "@_br0oklyyn" },
-            { absen: '20', nama: "Selena", peran: "Secratary 1", foto: "https://files.catbox.moe/dijjl5.jpg", ig: "@sukai.ririi1999" },
-            { absen: '1', nama: "Anastasya", peran: "Secretart 2", foto: "https://files.catbox.moe/3v7k5p.jpg", ig: "@sya.08110" },
-            { absen: '6', nama: "Felisia", peran: "Treasurer", foto: "https://files.catbox.moe/gw1awh.jpg", ig: null },
-            { absen: '2', nama: "Cantika", peran: "Anggota", foto: "https://files.catbox.moe/f9klf7.jpg", ig: "@only.ciikaa" },
-            { absen: '3', nama: "Constantin", peran: "Anggota", foto: "https://files.catbox.moe/3jzycc.jpg", ig: null },
-            { absen: '4', nama: "Eka", peran: "Anggota", foto: "https://files.catbox.moe/62ynsg.jpg", ig: "@ekavanny6" },
-            { absen: '7', nama: "Gedaliah", peran: "Anggota", foto: "https://files.catbox.moe/1a4avk.jpg", ig: "@bubur_dugong" },
-            { absen: '8', nama: "Inke", peran: "Anggota", foto: "https://files.catbox.moe/o48y22.jpg", ig: "@createworld134" },
-            { absen: '9', nama: "Jason Felix", peran: "Anggota", foto: "https://files.catbox.moe/wvcdlr.jpg", ig: null },
-            { absen: '10', nama: "Jason Natanael", peran: "Anggota", foto: "https://files.catbox.moe/ol3cb0.jpg", ig: "@nathanaelllldid" },
-            { absen: '11', nama: "Jason Vincentius", peran: "anggota", foto: "https://files.catbox.moe/9ilpab.jpg", ig: "@cimol_bojodd" },
-            { absen: '12', nama: "jesselin", peran: "Anggota", foto: "https://files.catbox.moe/awvi62.jpg", ig: "@jsln_grcia" },
-            { absen: '13', nama: "Jovan", peran: "Anggota", foto: "https://files.catbox.moe/xz0f5g.jpg", ig: "@vanzz1821" },
-            { absen: '14', nama: "Kenny", peran: "Anggota", foto: "https://files.catbox.moe/j40jt8.jpg", ig: "@kennplengerrr" },
-            { absen: '15', nama: "Laudya", peran: "Anggota", foto: "https://files.catbox.moe/eiytk7.jpg", ig: "@spiderrlau" },
-            { absen: '16', nama: "Michael", peran: "Anggota", foto: "https://files.catbox.moe/b8aaif.jpg", ig: "@michael_boentaran" },
-            { absen: '18', nama: "Reynaldi", peran: "Anggota", foto: "https://files.catbox.moe/jb3hj9.jpg", ig: "@re.ynaldi839" },
-            { absen: '19', nama: "Samuel", peran: "Anggota", foto: "https://files.catbox.moe/4vq1pu.jpg", ig: "@alwys.gabriel" },
-            { absen: '21', nama: "Simson", peran: "Anggota", foto: "https://files.catbox.moe/zo6v0x.jpg", ig: "@simsoen_766hi" },
-            { absen: '22', nama: "Stephen", peran: "Anggota", foto: "https://files.catbox.moe/wtg604.jpg", ig: "@wauwwwww17" },
-            { absen: '23', nama: "Valentino", peran: "Anggota", foto: "https://files.catbox.moe/9c70pm.jpg", ig: null },
-            { absen: '24', nama: "Vio", peran: "Anggota", foto: "https://files.catbox.moe/5bb2ad.jpg", ig: "@nthllzzz" },
-            { absen: '25', nama: "Weidy", peran: "Anggota", foto: "https://files.catbox.moe/tqee7y.jpg", ig: "@weidycs" },
-            { absen: '26', nama: "yasinta", peran: "Anggota", foto: "https://files.catbox.moe/kcz4gh.jpg", ig: "@taekjoo.jju" }
-        ];
-
-        const containerAnggota = document.getElementById('container-anggota');
-        anggotaData.forEach(orang => {
-            let igLink = orang.ig ? `<a href="https://instagram.com/${orang.ig.replace('@', '')}" target="_blank"><i class="fa-brands fa-instagram"></i> ${orang.ig}</a>` : `<span style="font-size: 0.85rem; color: var(--text-gray);">-</span>`;
-            
-            containerAnggota.innerHTML += `
-                <div class="anggota-card glass-element">
-                    <span class="absen-badge">${orang.absen !== '-' ? 'No. ' + orang.absen : 'Guru'}</span>
-                    <div class="foto-profil" style="background-image: url('${orang.foto}')"></div>
-                    <div class="info-anggota">
-                        <h4>${orang.nama}</h4>
-                        <p>${orang.peran}</p>
-                        <div>${igLink}</div>
-                    </div>
-                </div>`;
-        });
-
-        // --- JADWAL PEMBELAJARAN (FIXED) ---
-                const jadwalPelajaran = [
-            ["Upacara/Literasi", "Kebudimuliaan", "Pramuka", "B. Ind", "Senam/Kebersihan"],
-            ["IPA", "Agama Katolik", "Matematika", "B. Ind", "IPS"],
-            ["IPA", "Agama Katolik", "Matematika", "B. Ind", "IPS"],
-            ["IPA", "Agama Katolik", "Informatika", "PJOK", "Mandarin"],
-            ["Pancasila", "B. Ind", "Informatika", "PJOK", "Mandarin"],
-            ["Pancasila", "B. Ind", "Informatika", "PJOK", "B. Ing"],
-            ["Pancasila", "B. Ind", "IPS", "B. Ing", "B. Ing"],
-            ["Seni Budaya", "BK", "IPS", "B. Ing", "—"],
-            ["Seni Budaya", "IPA", "IPA", "Matematika", "—"],
-            ["Seni Budaya", "IPA", "IPA", "—", "—"]
-        ];
-
-
-        const namaHari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
-        const scrollJadwal = document.getElementById('scroll-jadwal');
-        scrollJadwal.innerHTML = '';
-
-        for (let h = 0; h < namaHari.length; h++) {
-            let listMapelHTML = '';
-            for (let j = 0; j < jadwalPelajaran.length; j++) {
-                let mapel = jadwalPelajaran[j][h];
-                if (mapel !== "—") {
-                    listMapelHTML += `
-                        <div class="mapel-item">
-                            <span class="jam-badge">${j + 1}</span> 
-                            <span>${mapel}</span>
-                        </div>
-                    `;
-                }
-            }
-            scrollJadwal.innerHTML += `
-                <div class="hari-card glass-element">
-                    <div class="hari-header">${namaHari[h]}</div>
-                    <div class="hari-body">${listMapelHTML}</div>
-                </div>
-            `;
+        function goToIndex() {
+            if (redirecting) return;
+            redirecting = true;
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.6s ease';
+            setTimeout(() => { window.location.href = 'home.html'; }, 600);
         }
 
-        // --- TAB SWITCHER (JADWAL & PIKET) ---
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-            document.getElementById('btn-' + tabId).classList.add('active');
-            document.getElementById('content-' + tabId).classList.add('active');
-        }
-
-        // --- PIKET 1 HARI INTERAKTIF ---
-        const dataPiket = [
-            { hari: "Senin", nama: ["Constan", "Inke", "Weidy", "Kenny", "Selena"] },
-            { hari: "Selasa", nama: ["Reynaldi", "Cantika", "Felisia", "Michael", "Vio"] },
-            { hari: "Rabu", nama: ["Gedaliah", "Jason V", "Jesselin", "Jovan", "Stephen"] },
-            { hari: "Kamis", nama: ["Jason F", "Yasinta", "Samuel", "Valentino", "Anas"] },
-            { hari: "Jumat", nama: ["Pieter", "Simson", "Laudya", "Jason N", "Eka", "Evelyn"] }
+        const s4Section = document.getElementById('scene-4');
+        const dotCoords = [
+            {x: -190, y: -130}, {x: -130, y: -170}, {x: -70, y: -140}, {x: -160, y: -60}, {x: -100, y: -40},
+            {x: -170, y: 50},   {x: -110, y: 110},  {x: -180, y: 150},  {x: -80, y: 160},  {x: -40, y: -110},
+            {x: 50, y: -160},   {x: 130, y: -170},  {x: 180, y: -130},  {x: 90, y: -60},   {x: 150, y: -40},
+            {x: 110, y: 30},    {x: 70, y: 90},     {x: 140, y: 120},   {x: 190, y: 160},  {x: 90, y: 170},
+            {x: -220, y: 0},    {x: 220, y: 0},     {x: 0, y: -190},    {x: 0, y: 190},    {x: -30, y: 70}, {x: 30, y: -50}
         ];
 
-        let indexPiket = 0;
-        const piketCard = document.getElementById('piket-card-view');
-        const piketHari = document.getElementById('piket-hari');
-        const piketNama = document.getElementById('piket-nama');
+        dotCoords.forEach(() => {
+            const dot = document.createElement('div');
+            dot.className = 's4-dot super-liquid-glass';
+            dot.innerHTML = `<i class="fa-solid fa-star"></i>`;
+            s4Section.appendChild(dot);
+        });
 
-        function geserPiket(arah) {
-            if(arah > 0) {
-                piketCard.classList.add('fade-out-left'); 
-            } else {
-                piketCard.classList.add('fade-out-right');
-            }
+        const scrollContainer = document.getElementById('scrollContainer');
+        const rulerBar = document.getElementById('rulerBar');
+        const scrollPlane = document.getElementById('scrollPlane');
+        const parallaxObjs = document.querySelectorAll('.p-obj');
 
-            setTimeout(() => {
-                indexPiket += arah;
-                if (indexPiket >= dataPiket.length) indexPiket = 0; 
-                if (indexPiket < 0) indexPiket = dataPiket.length - 1; 
+        let isTicking = false;
 
-                piketHari.textContent = dataPiket[indexPiket].hari;
-                
-                let htmlNama = '';
-                dataPiket[indexPiket].nama.forEach(n => {
-                    htmlNama += `<span>${n}</span>`;
+        scrollContainer.addEventListener('scroll', () => {
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    updateScrollEffects();
+                    isTicking = false;
                 });
-                piketNama.innerHTML = htmlNama;
+                isTicking = true;
+            }
+        });
 
-                piketCard.classList.remove('fade-out-left', 'fade-out-right');
-            }, 450); 
+        function updateScrollEffects() {
+            const scrollTop = scrollContainer.scrollTop;
+            const docHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+            const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) : 0;
+
+            rulerBar.style.width = (scrollPercent * 100) + '%';
+
+            const planeX = scrollPercent * (window.innerWidth + 120) - 60;
+            const planeY = Math.sin(scrollPercent * Math.PI * 4) * 70 + (scrollPercent * 160);
+            const planeRot = Math.cos(scrollPercent * Math.PI * 4) * 18;
+            scrollPlane.style.transform = `translate(${planeX}px, ${planeY}px) rotate(${planeRot}deg)`;
+
+            parallaxObjs.forEach(obj => {
+                const speed = parseFloat(obj.getAttribute('data-speed'));
+                const rotFactor = parseFloat(obj.getAttribute('data-rot')) || 0.1;
+                
+                const yPos = scrollTop * speed;
+                const rotation = scrollTop * rotFactor;
+                const scale = 1 + Math.sin(scrollPercent * Math.PI) * 0.15;
+
+                obj.style.transform = `translateY(${yPos}px) rotate(${rotation}deg) scale(${scale})`;
+            });
         }
+
+        /* TIMER HITUNG MUNDUR DI BAGIAN PALING BAWAH (SCENE 6) */
+        let countdownTimer = null;
+
+        function startCountdown() {
+            let count = 5;
+            const hintText = document.getElementById('scrollHintText');
+            const hintIcon = document.getElementById('scrollHintIcon');
+            
+            if (hintIcon) hintIcon.style.display = 'none';
+            hintText.textContent = `ANDA AKAN DIALIHKAN DALAM ${count}`;
+
+            clearInterval(countdownTimer);
+            countdownTimer = setInterval(() => {
+                count--;
+                if (count >= 0) {
+                    hintText.textContent = `ANDA AKAN DIALIHKAN DALAM ${count}`;
+                }
+                if (count === 0) {
+                    clearInterval(countdownTimer);
+                    goToIndex();
+                }
+            }, 1000);
+        }
+
+        function stopCountdown() {
+            clearInterval(countdownTimer);
+            const hintText = document.getElementById('scrollHintText');
+            const hintIcon = document.getElementById('scrollHintIcon');
+            
+            if (hintText) hintText.textContent = 'SCROLL KE BAWAH';
+            if (hintIcon) hintIcon.style.display = 'inline-block';
+        }
+
+        const sections = document.querySelectorAll('.scene-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+
+                    if (entry.target.id === 'scene-4') {
+                        const dots = entry.target.querySelectorAll('.s4-dot');
+                        dots.forEach((dot, idx) => {
+                            dot.style.opacity = '1';
+                            dot.style.transform = `translate(${dotCoords[idx].x}px, ${dotCoords[idx].y}px) scale(1.1)`;
+                        });
+                    }
+
+                    /* JIKA SAMPAI DI SCENE 6 (PALING BAWAH), MULAI HITUNG MUNDUR */
+                    if (entry.target.id === 'scene-6') {
+                        startCountdown();
+                    }
+                } else {
+                    entry.target.classList.remove('active');
+                    if (entry.target.id === 'scene-4') {
+                        const dots = entry.target.querySelectorAll('.s4-dot');
+                        dots.forEach(dot => {
+                            dot.style.opacity = '0';
+                            dot.style.transform = 'translate(0, 0) scale(0.5)';
+                        });
+                    }
+
+                    /* JIKA MENTINGGALKAN SCENE 6, HENTIKAN HITUNG MUNDUR */
+                    if (entry.target.id === 'scene-6') {
+                        stopCountdown();
+                    }
+                }
+            });
+        }, { 
+            root: scrollContainer,
+            threshold: 0.5 
+        });
+
+        sections.forEach(section => observer.observe(section));
     </script>
 </body>
 </html>
