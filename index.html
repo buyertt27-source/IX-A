@@ -816,7 +816,7 @@
             redirecting = true;
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.6s ease';
-            setTimeout(() => { window.location.href = 'index.html'; }, 600);
+            setTimeout(() => { window.location.href = 'home.html'; }, 600);
         }
 
         const s4Section = document.getElementById('scene-4');
@@ -885,13 +885,13 @@
             const hintIcon = document.getElementById('scrollHintIcon');
             
             if (hintIcon) hintIcon.style.display = 'none';
-            hintText.textContent = `ANDA AKAN DIALIHKAN DALAM ${count} MENUJU INDEX.HTML`;
+            hintText.textContent = `ANDA AKAN DIALIHKAN DALAM ${count}`;
 
             clearInterval(countdownTimer);
             countdownTimer = setInterval(() => {
                 count--;
                 if (count >= 0) {
-                    hintText.textContent = `ANDA AKAN DIALIHKAN DALAM ${count} MENUJU INDEX.HTML`;
+                    hintText.textContent = `ANDA AKAN DIALIHKAN DALAM ${count}`;
                 }
                 if (count === 0) {
                     clearInterval(countdownTimer);
